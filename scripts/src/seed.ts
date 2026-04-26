@@ -5,6 +5,32 @@ import {
   activitiesTable,
 } from "@workspace/db";
 import { sql } from "drizzle-orm";
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const COUNTRY_IMAGES = JSON.parse(
+  readFileSync(join(__dirname, "country_images.json"), "utf8"),
+) as Record<string, string[]>;
+
+function pickImage(code: string, idx: number): string {
+  const pool = COUNTRY_IMAGES[code] ?? [];
+  if (pool.length === 0) {
+    return "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?auto=format&fit=crop&w=1600&q=80";
+  }
+  return pool[idx % pool.length];
+}
+
+function pickGallery(code: string, start: number, count: number): string[] {
+  const pool = COUNTRY_IMAGES[code] ?? [];
+  if (pool.length === 0) return [];
+  const out: string[] = [];
+  for (let i = 0; i < count; i++) {
+    out.push(pool[(start + i) % pool.length]);
+  }
+  return out;
+}
 
 type ActivitySeed = {
   name: string;
@@ -1809,14 +1835,16 @@ async function main() {
       flag: c.flag,
       region: c.region,
       description: c.description,
-      heroImage: c.heroImage,
+      heroImage: pickImage(c.code, 0),
       currency: c.currency,
       bestSeason: c.bestSeason,
       emergency: c.emergency,
       sortOrder: c.sortOrder,
     });
 
-    for (const a of c.activities) {
+    for (let i = 0; i < c.activities.length; i++) {
+      const a = c.activities[i];
+      const heroIdx = (i + 1) % Math.max(1, (COUNTRY_IMAGES[c.code] ?? []).length);
       await db.insert(activitiesTable).values({
         name: a.name,
         type: a.type,
@@ -1827,8 +1855,8 @@ async function main() {
         estimatedCost: a.estimatedCost,
         rating: a.rating,
         reviewCount: a.reviewCount,
-        heroImage: a.heroImage,
-        gallery: a.gallery,
+        heroImage: pickImage(c.code, i + 1),
+        gallery: pickGallery(c.code, heroIdx, 3),
         shortDescription: a.shortDescription,
         description: a.description,
         bestTimeToVisit: a.bestTimeToVisit,

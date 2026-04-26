@@ -1,0 +1,110 @@
+You are a senior full-stack web developer.
+
+I want to build a modern, responsive web application for adventure travel.
+
+App Idea:
+The platform helps users discover adventure activities worldwide, plan trips, track their journeys, and get smart recommendations.
+
+Core Features:
+
+1. Adventure Discovery (Main Feature):
+- Users can search by country or city
+- The system MUST include all Arab countries as selectable destinations, including:
+  Egypt, Saudi Arabia, United Arab Emirates, Qatar, Kuwait, Bahrain, Oman, Jordan, Lebanon, Syria, Iraq, Palestine, Morocco, Algeria, Tunisia, Libya, Sudan, Somalia, Djibouti, Comoros, Mauritania, Yemen
+- Each country should have at least 2–5 example adventure activities (even if mock data)
+- Display adventure activities (hiking, diving, safari, climbing, etc.)
+- Advanced filters:
+  - Difficulty level
+  - Budget range
+  - Activity type
+  - Duration
+  - Weather conditions
+- Each activity page includes:
+  - Description
+  - Difficulty level
+  - Required gear
+  - Best time to visit
+  - Estimated cost
+  - Interactive map location
+  - Image gallery
+
+2. Trip Tracking (Web-based Simulation):
+- Track trips using browser geolocation
+- Display route on interactive map
+- Show distance, duration, and speed
+- Save trip history (local storage or backend)
+- Share trip summaries
+
+3. Smart Packing Recommendations:
+- Automatically generate packing lists based on activity + destination
+- Categorized (clothing, gear, safety, documents)
+- Interactive checklist UI
+
+4. Personalized Recommendations:
+- Recommend activities based on user preferences and history
+- Show "Recommended for You" section on homepage
+
+5. User Accounts & Profiles:
+- Sign up / Login system
+- Save favorites
+- Track completed adventures
+- Show achievements / badges
+
+6. Reviews & Ratings:
+- Users can:
+  - Rate activities
+  - Write reviews
+  - Upload images
+- Sort and filter reviews
+
+7. Emergency Info (Web Version):
+- Show local emergency numbers for each country
+- Include a quick access emergency panel
+
+8. Offline Support (PWA):
+- Convert app to Progressive Web App (PWA)
+- Cache pages and data for offline browsing
+- Allow limited offline access to saved trips and activities
+
+UI/UX Requirements:
+- Modern, clean design
+- Fully responsive (mobile-first)
+- Dark mode
+- Smooth animations
+- Include country flags in the UI
+- Map-based navigation
+- Fast loading (optimized assets)
+
+Tech Stack:
+
+Frontend:
+- React.js (Next.js preferred)
+- Tailwind CSS
+- Framer Motion
+
+Backend:
+- Node.js + Express (or Next.js API routes)
+
+Database:
+- MongoDB
+
+Authentication:
+- Firebase Auth or JWT
+
+Maps:
+- Google Maps API or Mapbox
+
+Offline Support:
+- Service Workers + IndexedDB
+
+Deliverables:
+1. Full project architecture
+2. Folder structure
+3. Database schema
+4. API endpoints
+5. Key pages (Home, Activity, Profile, Map, Trip Tracker)
+6. Sample UI components
+7. MVP working code
+8. Deployment guide (Vercel or Netlify)
+
+Make it production-ready, scalable, SEO-friendly, and optimized for performance.

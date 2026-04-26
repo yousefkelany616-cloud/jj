@@ -3,20 +3,26 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: Wanderlust adventure travel API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
-    description: Health operations
+  - name: auth
+  - name: countries
+  - name: activities
+  - name: trips
+  - name: reviews
+  - name: favorites
+  - name: packing
+  - name: dashboard
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,6 +30,391 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /auth/session:
+    get:
+      operationId: getSession
+      tags: [auth]
+      summary: Get current session
+      responses:
+        "200":
+          description: Current user (or null)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SessionResponse"
+
+  /auth/login:
+    post:
+      operationId: login
+      tags: [auth]
+      summary: Sign in or sign up (passwordless demo auth)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginBody"
+      responses:
+        "200":
+          description: User
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+
+  /auth/logout:
+    post:
+      operationId: logout
+      tags: [auth]
+      summary: Log out
+      responses:
+        "204":
+          description: Logged out
+
+  /countries:
+    get:
+      operationId: listCountries
+      tags: [countries]
+      summary: List all countries with adventure activities
+      responses:
+        "200":
+          description: List of countries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Country"
+
+  /countries/{code}:
+    get:
+      operationId: getCountry
+      tags: [countries]
+      summary: Get country details with emergency info
+      parameters:
+        - name: code
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Country
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CountryDetail"
+
+  /activities:
+    get:
+      operationId: listActivities
+      tags: [activities]
+      summary: Search and filter adventure activities
+      parameters:
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: country
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: type
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: difficulty
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: minBudget
+          in: query
+          required: false
+          schema:
+            type: number
+        - name: maxBudget
+          in: query
+          required: false
+          schema:
+            type: number
+        - name: maxDurationDays
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: weather
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Filtered list of activities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Activity"
+
+  /activities/{id}:
+    get:
+      operationId: getActivity
+      tags: [activities]
+      summary: Get full activity details
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Activity detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ActivityDetail"
+
+  /activities/recommended:
+    get:
+      operationId: getRecommendedActivities
+      tags: [activities]
+      summary: Personalized recommendations
+      responses:
+        "200":
+          description: Recommended activities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Activity"
+
+  /activities/featured:
+    get:
+      operationId: getFeaturedActivities
+      tags: [activities]
+      summary: Editor's picks / top-rated
+      responses:
+        "200":
+          description: Featured activities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Activity"
+
+  /trips:
+    get:
+      operationId: listTrips
+      tags: [trips]
+      summary: List my trips
+      responses:
+        "200":
+          description: My trip history
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Trip"
+    post:
+      operationId: createTrip
+      tags: [trips]
+      summary: Save a tracked trip
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTripBody"
+      responses:
+        "200":
+          description: Created trip
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Trip"
+
+  /trips/{id}:
+    get:
+      operationId: getTrip
+      tags: [trips]
+      summary: Get a single trip
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Trip detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Trip"
+    delete:
+      operationId: deleteTrip
+      tags: [trips]
+      summary: Delete a trip
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Deleted
+
+  /activities/{id}/reviews:
+    get:
+      operationId: listReviews
+      tags: [reviews]
+      summary: List reviews for an activity
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [recent, top, low]
+      responses:
+        "200":
+          description: Reviews
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Review"
+    post:
+      operationId: createReview
+      tags: [reviews]
+      summary: Submit a review
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateReviewBody"
+      responses:
+        "200":
+          description: Created review
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Review"
+
+  /favorites:
+    get:
+      operationId: listFavorites
+      tags: [favorites]
+      summary: List my favorited activities
+      responses:
+        "200":
+          description: Favorites
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Activity"
+
+  /favorites/{activityId}:
+    post:
+      operationId: addFavorite
+      tags: [favorites]
+      summary: Favorite an activity
+      parameters:
+        - name: activityId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Added
+    delete:
+      operationId: removeFavorite
+      tags: [favorites]
+      summary: Unfavorite an activity
+      parameters:
+        - name: activityId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Removed
+
+  /packing/{activityId}:
+    get:
+      operationId: getPackingList
+      tags: [packing]
+      summary: Generate a smart packing list for an activity
+      parameters:
+        - name: activityId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Packing list grouped by category
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PackingList"
+
+  /dashboard/summary:
+    get:
+      operationId: getDashboardSummary
+      tags: [dashboard]
+      summary: Personalized dashboard summary
+      responses:
+        "200":
+          description: Summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardSummary"
+
+  /dashboard/trending:
+    get:
+      operationId: getTrendingDestinations
+      tags: [dashboard]
+      summary: Trending destinations (by activity count and ratings)
+      responses:
+        "200":
+          description: Trending
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TrendingDestination"
+
 components:
   schemas:
     HealthStatus:
@@ -31,6 +422,402 @@ components:
       properties:
         status:
           type: string
-      required:
-        - status
+      required: [status]
 
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        avatarUrl:
+          type: string
+          nullable: true
+        completedTripsCount:
+          type: integer
+        favoritesCount:
+          type: integer
+        achievements:
+          type: array
+          items:
+            $ref: "#/components/schemas/Achievement"
+      required: [id, name, email, completedTripsCount, favoritesCount, achievements]
+
+    Achievement:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        icon:
+          type: string
+        unlocked:
+          type: boolean
+      required: [id, name, description, icon, unlocked]
+
+    SessionResponse:
+      type: object
+      properties:
+        user:
+          oneOf:
+            - $ref: "#/components/schemas/User"
+            - type: "null"
+      required: [user]
+
+    LoginBody:
+      type: object
+      properties:
+        email:
+          type: string
+        name:
+          type: string
+      required: [email, name]
+
+    Country:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        flag:
+          type: string
+        region:
+          type: string
+        activityCount:
+          type: integer
+        heroImage:
+          type: string
+      required: [code, name, flag, region, activityCount, heroImage]
+
+    EmergencyInfo:
+      type: object
+      properties:
+        police:
+          type: string
+        ambulance:
+          type: string
+        fire:
+          type: string
+        touristPolice:
+          type: string
+          nullable: true
+        embassyHotline:
+          type: string
+          nullable: true
+      required: [police, ambulance, fire]
+
+    CountryDetail:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        flag:
+          type: string
+        region:
+          type: string
+        description:
+          type: string
+        heroImage:
+          type: string
+        currency:
+          type: string
+        bestSeason:
+          type: string
+        emergency:
+          $ref: "#/components/schemas/EmergencyInfo"
+        activities:
+          type: array
+          items:
+            $ref: "#/components/schemas/Activity"
+      required: [code, name, flag, region, description, heroImage, currency, bestSeason, emergency, activities]
+
+    Activity:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+        countryCode:
+          type: string
+        countryName:
+          type: string
+        countryFlag:
+          type: string
+        city:
+          type: string
+        difficulty:
+          type: string
+        durationDays:
+          type: integer
+        estimatedCost:
+          type: number
+        rating:
+          type: number
+        reviewCount:
+          type: integer
+        heroImage:
+          type: string
+        shortDescription:
+          type: string
+        weather:
+          type: string
+      required:
+        [id, name, type, countryCode, countryName, countryFlag, city, difficulty, durationDays, estimatedCost, rating, reviewCount, heroImage, shortDescription, weather]
+
+    ActivityDetail:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+        countryCode:
+          type: string
+        countryName:
+          type: string
+        countryFlag:
+          type: string
+        city:
+          type: string
+        difficulty:
+          type: string
+        durationDays:
+          type: integer
+        estimatedCost:
+          type: number
+        rating:
+          type: number
+        reviewCount:
+          type: integer
+        heroImage:
+          type: string
+        gallery:
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+        bestTimeToVisit:
+          type: string
+        weather:
+          type: string
+        latitude:
+          type: number
+        longitude:
+          type: number
+        requiredGear:
+          type: array
+          items:
+            type: string
+        highlights:
+          type: array
+          items:
+            type: string
+        isFavorited:
+          type: boolean
+      required:
+        [id, name, type, countryCode, countryName, countryFlag, city, difficulty, durationDays, estimatedCost, rating, reviewCount, heroImage, gallery, description, bestTimeToVisit, weather, latitude, longitude, requiredGear, highlights, isFavorited]
+
+    TripPoint:
+      type: object
+      properties:
+        lat:
+          type: number
+        lng:
+          type: number
+        timestamp:
+          type: integer
+      required: [lat, lng, timestamp]
+
+    Trip:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        activityId:
+          type: string
+          nullable: true
+        activityName:
+          type: string
+          nullable: true
+        countryCode:
+          type: string
+          nullable: true
+        startedAt:
+          type: string
+        endedAt:
+          type: string
+        distanceKm:
+          type: number
+        durationSec:
+          type: integer
+        avgSpeedKmh:
+          type: number
+        notes:
+          type: string
+          nullable: true
+        path:
+          type: array
+          items:
+            $ref: "#/components/schemas/TripPoint"
+      required: [id, title, startedAt, endedAt, distanceKm, durationSec, avgSpeedKmh, path]
+
+    CreateTripBody:
+      type: object
+      properties:
+        title:
+          type: string
+        activityId:
+          type: string
+          nullable: true
+        countryCode:
+          type: string
+          nullable: true
+        startedAt:
+          type: string
+        endedAt:
+          type: string
+        distanceKm:
+          type: number
+        durationSec:
+          type: integer
+        avgSpeedKmh:
+          type: number
+        notes:
+          type: string
+          nullable: true
+        path:
+          type: array
+          items:
+            $ref: "#/components/schemas/TripPoint"
+      required: [title, startedAt, endedAt, distanceKm, durationSec, avgSpeedKmh, path]
+
+    Review:
+      type: object
+      properties:
+        id:
+          type: string
+        activityId:
+          type: string
+        userName:
+          type: string
+        userAvatar:
+          type: string
+          nullable: true
+        rating:
+          type: integer
+        title:
+          type: string
+        body:
+          type: string
+        images:
+          type: array
+          items:
+            type: string
+        createdAt:
+          type: string
+      required: [id, activityId, userName, rating, title, body, images, createdAt]
+
+    CreateReviewBody:
+      type: object
+      properties:
+        rating:
+          type: integer
+        title:
+          type: string
+        body:
+          type: string
+        images:
+          type: array
+          items:
+            type: string
+      required: [rating, title, body]
+
+    PackingItem:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        essential:
+          type: boolean
+      required: [id, name, essential]
+
+    PackingCategory:
+      type: object
+      properties:
+        category:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/PackingItem"
+      required: [category, items]
+
+    PackingList:
+      type: object
+      properties:
+        activityId:
+          type: string
+        activityName:
+          type: string
+        categories:
+          type: array
+          items:
+            $ref: "#/components/schemas/PackingCategory"
+      required: [activityId, activityName, categories]
+
+    DashboardSummary:
+      type: object
+      properties:
+        totalAdventures:
+          type: integer
+        totalDistanceKm:
+          type: number
+        countriesVisited:
+          type: integer
+        favoritesCount:
+          type: integer
+        recentTrips:
+          type: array
+          items:
+            $ref: "#/components/schemas/Trip"
+        recommended:
+          type: array
+          items:
+            $ref: "#/components/schemas/Activity"
+      required: [totalAdventures, totalDistanceKm, countriesVisited, favoritesCount, recentTrips, recommended]
+
+    TrendingDestination:
+      type: object
+      properties:
+        countryCode:
+          type: string
+        countryName:
+          type: string
+        flag:
+          type: string
+        heroImage:
+          type: string
+        activityCount:
+          type: integer
+        avgRating:
+          type: number
+      required: [countryCode, countryName, flag, heroImage, activityCount, avgRating]

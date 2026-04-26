@@ -4,24 +4,20 @@
 
 pnpm workspace monorepo using TypeScript. Each package manages its own dependencies.
 
-## Stack
+## Artifacts
 
-- **Monorepo tool**: pnpm workspaces
-- **Node.js version**: 24
-- **Package manager**: pnpm
-- **TypeScript version**: 5.9
-- **API framework**: Express 5
-- **Database**: PostgreSQL + Drizzle ORM
-- **Validation**: Zod (`zod/v4`), `drizzle-zod`
-- **API codegen**: Orval (from OpenAPI spec)
-- **Build**: esbuild (CJS bundle)
+- **wanderlust** (`/`) — Adventure travel discovery app focused on the Arab world. React + Vite + Tailwind, Express API, Postgres + Drizzle, react-leaflet maps, framer-motion animations, dark mode.
+- **api-server** — Express API powering Wanderlust. Endpoints: auth, countries, activities (with filters), trips (browser-geolocation tracker), reviews, favorites, packing lists, dashboard summary + trending.
+- **mockup-sandbox** — Canvas component preview server.
 
-## Key Commands
+## Database
 
-- `pnpm run typecheck` — full typecheck across all packages
-- `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- `pnpm --filter @workspace/api-server run dev` — run API server locally
+PostgreSQL (Drizzle). Tables: `users`, `countries`, `activities`, `trips`, `reviews`, `favorites`. Seeded with 22 Arab countries plus Nepal/Peru/Iceland.
 
-See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details.
+## Auth
+
+Demo passwordless: POST `/api/auth/login` with `{email, name}` sets an httpOnly `wl_session` cookie containing the user id. CORS configured with credentials between web (port 21455) and api-server (port 8080).
+
+## Scripts
+
+- `pnpm --filter @workspace/scripts run seed` — Reseed the database.

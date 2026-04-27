@@ -8,8 +8,10 @@ import { useLocation } from "wouter";
 import { useDebounce } from "@/hooks/use-debounce";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import { useT } from "@/lib/i18n";
 
 export default function Discover() {
+  const t = useT();
   const [location] = useLocation();
   const searchParams = new URLSearchParams(window.location.search);
   const initialSearch = searchParams.get("search") || "";
@@ -30,13 +32,13 @@ export default function Discover() {
     <MainLayout>
       <div className="bg-muted/30 border-b border-border/50 py-8">
         <div className="container px-4">
-          <h1 className="text-4xl font-serif font-bold mb-6">Discover Adventures</h1>
+          <h1 className="text-4xl font-serif font-bold mb-6">{t("discover.title")}</h1>
           <div className="flex flex-col md:flex-row gap-4">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-              <Input 
-                placeholder="Search by name, country, city..." 
-                className="pl-10 h-12 text-lg bg-background"
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground rtl:left-auto rtl:right-3" />
+              <Input
+                placeholder={t("discover.searchPlaceholder")}
+                className="pl-10 h-12 text-lg bg-background rtl:pl-3 rtl:pr-10"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
@@ -44,10 +46,10 @@ export default function Discover() {
             <div className="flex gap-4">
               <Select value={difficulty} onValueChange={setDifficulty}>
                 <SelectTrigger className="w-[160px] h-12 bg-background">
-                  <SelectValue placeholder="Difficulty" />
+                  <SelectValue placeholder={t("discover.anyDifficulty")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">Any Difficulty</SelectItem>
+                  <SelectItem value="all">{t("discover.anyDifficulty")}</SelectItem>
                   <SelectItem value="easy">Easy</SelectItem>
                   <SelectItem value="moderate">Moderate</SelectItem>
                   <SelectItem value="hard">Hard</SelectItem>
@@ -56,15 +58,15 @@ export default function Discover() {
               </Select>
               <Select value={type} onValueChange={setType}>
                 <SelectTrigger className="w-[160px] h-12 bg-background">
-                  <SelectValue placeholder="Activity Type" />
+                  <SelectValue placeholder={t("discover.anyType")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">Any Type</SelectItem>
-                  <SelectItem value="hiking">Hiking</SelectItem>
-                  <SelectItem value="diving">Diving</SelectItem>
-                  <SelectItem value="climbing">Climbing</SelectItem>
-                  <SelectItem value="safari">Desert Safari</SelectItem>
-                  <SelectItem value="cultural">Cultural</SelectItem>
+                  <SelectItem value="all">{t("discover.anyType")}</SelectItem>
+                  <SelectItem value="Hiking">Hiking</SelectItem>
+                  <SelectItem value="Diving">Diving</SelectItem>
+                  <SelectItem value="Snorkeling">Snorkeling</SelectItem>
+                  <SelectItem value="Camping">Camping</SelectItem>
+                  <SelectItem value="Safari">Safari</SelectItem>
                 </SelectContent>
               </Select>
             </div>

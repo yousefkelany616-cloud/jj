@@ -3,16 +3,17 @@ import { useListTrips } from "@workspace/api-client-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "wouter";
 import { Map, Route, Clock, Calendar } from "lucide-react";
+import { useT } from "@/lib/i18n";
 
 export default function Trips() {
   const { data: trips, isLoading } = useListTrips();
+  const t = useT();
 
   return (
     <MainLayout>
       <div className="bg-muted/30 border-b border-border/50 py-8">
         <div className="container px-4">
-          <h1 className="text-4xl font-serif font-bold mb-2">My Trips</h1>
-          <p className="text-muted-foreground text-lg">Your adventure history and recorded paths.</p>
+          <h1 className="text-4xl font-serif font-bold mb-2">{t("trip.title")}</h1>
         </div>
       </div>
 
@@ -26,10 +27,7 @@ export default function Trips() {
             <div className="bg-muted w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
               <Map className="w-10 h-10 text-muted-foreground" />
             </div>
-            <h3 className="text-2xl font-serif font-bold mb-2">No trips recorded yet</h3>
-            <p className="text-muted-foreground max-w-md mx-auto mb-6">
-              Track your journey live using the tracker and build your personal expedition journal.
-            </p>
+            <h3 className="text-2xl font-serif font-bold mb-2">{t("trip.empty")}</h3>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

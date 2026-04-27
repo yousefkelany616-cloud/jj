@@ -1,13 +1,14 @@
 import { Link, useLocation } from "wouter";
 import { useGetSession, useLogout } from "@workspace/api-client-react";
 import { Button } from "@/components/ui/button";
-import { Compass, Search, User as UserIcon, Menu, Map as MapIcon, LogOut, Sun, Moon } from "lucide-react";
+import { Compass, User as UserIcon, Menu, Map as MapIcon, LogOut, Sun, Moon, Languages } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useTheme } from "next-themes";
 import { useQueryClient } from "@tanstack/react-query";
 import { getGetSessionQueryKey } from "@workspace/api-client-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useI18n } from "@/lib/i18n";
 
 export function Navbar() {
   const { data: session } = useGetSession();
@@ -15,6 +16,7 @@ export function Navbar() {
   const [, setLocation] = useLocation();
   const { theme, setTheme } = useTheme();
   const queryClient = useQueryClient();
+  const { t, lang, setLang } = useI18n();
 
   const handleLogout = async () => {
     await logoutParams.mutateAsync();
@@ -23,9 +25,9 @@ export function Navbar() {
   };
 
   const navLinks = [
-    { href: "/discover", label: "Discover", icon: Compass },
-    { href: "/countries", label: "Destinations", icon: MapIcon },
-    { href: "/trip-tracker", label: "Track Trip", icon: MapIcon },
+    { href: "/discover", label: t("nav.discover"), icon: Compass },
+    { href: "/countries", label: t("nav.destinations"), icon: MapIcon },
+    { href: "/trip-tracker", label: t("nav.trackTrip"), icon: MapIcon },
   ];
 
   return (
@@ -48,10 +50,21 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-4">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setLang(lang === "en" ? "ar" : "en")}
+            className="gap-1 px-2 font-semibold"
+            aria-label={t("nav.toggleLanguage")}
+          >
+            <Languages className="h-4 w-4" />
+            <span className="text-xs">{lang === "en" ? "AR" : "EN"}</span>
+          </Button>
+
           <Button variant="ghost" size="icon" onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
             <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
             <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            <span className="sr-only">Toggle theme</span>
+            <span className="sr-only">{t("nav.toggleTheme")}</span>
           </Button>
 
           {session?.user ? (
@@ -74,22 +87,22 @@ export function Navbar() {
                   </div>
                 </div>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => setLocation("/dashboard")}>Dashboard</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setLocation("/trips")}>My Trips</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setLocation("/favorites")}>Favorites</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setLocation("/profile")}>Profile</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setLocation("/emergency")}>Emergency Contacts</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setLocation("/dashboard")}>{t("nav.dashboard")}</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setLocation("/trips")}>{t("nav.myTrips")}</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setLocation("/favorites")}>{t("nav.favorites")}</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setLocation("/profile")}>{t("nav.profile")}</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setLocation("/emergency")}>{t("nav.emergency")}</DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout} className="text-destructive focus:bg-destructive/10 focus:text-destructive">
                   <LogOut className="mr-2 h-4 w-4" />
-                  <span>Log out</span>
+                  <span>{t("nav.logout")}</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
             <div className="hidden sm:flex items-center gap-2">
               <Button variant="default" size="sm" onClick={() => setLocation("/login")}>
-                Sign In
+                {t("nav.signIn")}
               </Button>
             </div>
           )}
@@ -98,7 +111,7 @@ export function Navbar() {
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="md:hidden">
                 <Menu className="h-5 w-5" />
-                <span className="sr-only">Toggle menu</span>
+                <span className="sr-only">{t("nav.toggleMenu")}</span>
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
@@ -110,7 +123,7 @@ export function Navbar() {
                 ))}
                 {!session?.user && (
                   <Button className="mt-4 w-full" onClick={() => setLocation("/login")}>
-                    Sign In
+                    {t("nav.signIn")}
                   </Button>
                 )}
               </nav>

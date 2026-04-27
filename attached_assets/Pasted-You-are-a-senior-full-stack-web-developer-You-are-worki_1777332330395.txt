@@ -1,0 +1,95 @@
+You are a senior full-stack web developer.
+
+You are working on an EXISTING web application. Your task is to apply VERY STRICT and LIMITED modifications.
+
+⚠️ CRITICAL RULES (MUST FOLLOW):
+- DO NOT change any existing features
+- DO NOT remove or modify existing components, layout, or structure
+- DO NOT redesign the UI
+- DO NOT refactor the project
+- DO NOT break any existing functionality
+- ONLY apply the requested changes below
+
+----------------------------------------
+
+1. 🌍 LIMIT TO EGYPT ONLY
+
+- Keep the same UI and structure
+- Replace any country-related data with Egypt only
+- Remove other countries from data sources ONLY (not UI components)
+- All activities must be inside Egypt
+
+----------------------------------------
+
+2. 🌐 ADD LANGUAGE SUPPORT (EN + AR)
+
+- Add a simple language toggle (EN / AR)
+- DO NOT redesign UI
+
+- Only replace text dynamically using a translation object
+- Translate all visible text:
+  - Titles
+  - Buttons
+  - Labels
+  - Descriptions
+
+- Arabic support:
+  - Add RTL support ONLY when Arabic is selected
+  - Do NOT change layout otherwise
+
+----------------------------------------
+
+3. 🏜️ ADVENTURE FILTER (NO NORMAL TOURISM)
+
+- Keep existing activity cards UI
+- Only update the DATA:
+  - Include only adventure activities:
+    Diving, Safari, Hiking, Camping, Snorkeling
+
+- Remove non-adventure activities from dataset ONLY
+
+----------------------------------------
+
+4. 📍 USE REAL EGYPT LOCATIONS (DATA ONLY)
+
+Replace activity data with real locations such as:
+- Dahab
+- Ras Mohammed National Park
+- Siwa Oasis
+- Mount Sinai
+- White Desert
+
+⚠️ Do NOT change UI components — only update data
+
+----------------------------------------
+
+5. 📸 REAL IMAGES ONLY (NO PLACEHOLDERS)
+
+- Replace image URLs in the dataset ONLY
+- Use real images from:
+  - Unsplash
+  - Pexels
+
+⚠️ Do NOT change image components or layout
+
+----------------------------------------
+
+6. 🧠 KEEP EVERYTHING ELSE THE SAME
+
+- Do NOT touch:
+  - Reviews system
+  - Profile
+  - Navigation
+  - Filters logic
+  - Layout
+  - Styling
+
+----------------------------------------
+
+🎯 FINAL GOAL:
+
+Update ONLY:
+- Data (activities, images, locations)
+- Add translation layer (without UI changes)
+
+Everything else MUST remain exactly the same.

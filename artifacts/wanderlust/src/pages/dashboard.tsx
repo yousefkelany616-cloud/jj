@@ -6,16 +6,18 @@ import { Map, MapPin, Heart, Compass, Route as RouteIcon, Clock } from "lucide-r
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { ActivityCard } from "@/components/ui/activity-card";
+import { useT } from "@/lib/i18n";
 
 export default function Dashboard() {
   const { data: summary, isLoading } = useGetDashboardSummary();
+  const t = useT();
 
   return (
     <MainLayout>
       <div className="bg-muted/30 border-b border-border/50 py-8">
         <div className="container px-4">
-          <h1 className="text-4xl font-serif font-bold mb-2">Your Dashboard</h1>
-          <p className="text-muted-foreground text-lg">Welcome back. Ready for your next adventure?</p>
+          <h1 className="text-4xl font-serif font-bold mb-2">{t("nav.dashboard")}</h1>
+          <p className="text-muted-foreground text-lg">{t("dashboard.welcome")}</p>
         </div>
       </div>
 
@@ -30,7 +32,7 @@ export default function Dashboard() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">Total Adventures</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">{t("profile.totalAdventures")}</CardTitle>
                 <Compass className="h-4 w-4 text-primary" />
               </CardHeader>
               <CardContent>
@@ -39,7 +41,7 @@ export default function Dashboard() {
             </Card>
             <Card>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">Distance Tracked</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">{t("profile.totalDistance")}</CardTitle>
                 <RouteIcon className="h-4 w-4 text-primary" />
               </CardHeader>
               <CardContent>
@@ -48,7 +50,7 @@ export default function Dashboard() {
             </Card>
             <Card>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">Countries Visited</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">{t("profile.countriesVisited")}</CardTitle>
                 <MapPin className="h-4 w-4 text-primary" />
               </CardHeader>
               <CardContent>
@@ -57,7 +59,7 @@ export default function Dashboard() {
             </Card>
             <Card>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">Saved Favorites</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">{t("nav.favorites")}</CardTitle>
                 <Heart className="h-4 w-4 text-primary" />
               </CardHeader>
               <CardContent>
@@ -70,18 +72,17 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           <div className="lg:col-span-2 space-y-6">
             <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-serif font-bold">Recent Trips</h2>
+              <h2 className="text-2xl font-serif font-bold">{t("dashboard.recentTrips")}</h2>
               <Link href="/trips">
-                <Button variant="ghost">View all</Button>
+                <Button variant="ghost">{t("home.viewAll")}</Button>
               </Link>
             </div>
             {summary?.recentTrips?.length === 0 ? (
               <div className="bg-muted/30 border border-dashed rounded-xl p-8 text-center">
                 <Map className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-50" />
-                <h3 className="text-lg font-medium mb-2">No trips recorded yet</h3>
-                <p className="text-muted-foreground mb-4">Start tracking your adventures to see them here.</p>
+                <h3 className="text-lg font-medium mb-2">{t("trip.empty")}</h3>
                 <Link href="/trip-tracker">
-                  <Button>Start Tracker</Button>
+                  <Button>{t("nav.trackTrip")}</Button>
                 </Link>
               </div>
             ) : (
@@ -114,7 +115,7 @@ export default function Dashboard() {
           </div>
 
           <div className="space-y-6">
-            <h2 className="text-2xl font-serif font-bold">Recommended for You</h2>
+            <h2 className="text-2xl font-serif font-bold">{t("dashboard.recommended")}</h2>
             <div className="flex flex-col gap-6">
               {summary?.recommended?.map((activity, i) => (
                 <ActivityCard key={activity.id} activity={activity} index={i} />

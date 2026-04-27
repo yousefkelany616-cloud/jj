@@ -1,16 +1,17 @@
 import { MainLayout } from "@/components/layout/main-layout";
 import { useListCountries } from "@workspace/api-client-react";
 import { CountryCard, CountryCardSkeleton } from "@/components/ui/country-card";
+import { useT } from "@/lib/i18n";
 
 export default function Countries() {
   const { data: countries, isLoading } = useListCountries();
+  const t = useT();
 
   return (
     <MainLayout>
       <div className="bg-muted/30 border-b border-border/50 py-8">
         <div className="container px-4">
-          <h1 className="text-4xl font-serif font-bold mb-2">Destinations</h1>
-          <p className="text-muted-foreground text-lg">Explore the Arab world and beyond.</p>
+          <h1 className="text-4xl font-serif font-bold mb-2">{t("countries.title")}</h1>
         </div>
       </div>
 

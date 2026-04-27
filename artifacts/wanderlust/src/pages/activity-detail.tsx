@@ -104,7 +104,7 @@ export default function ActivityDetail() {
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-12 h-[60vh] min-h-[400px]">
           <div className="md:col-span-3 rounded-2xl overflow-hidden">
-            <img src={activity.heroImage} alt={activity.name} className="w-full h-full object-cover" />
+            <img src="https://www.zubludiving.com/images/Belize/Turrneffe-Atoll-Lighthouse-Reef-Great-Blue-Hole/Turneffe-Atoll-Lighthouse-Reef-Great-Blue-Hole-Belize-Diving-10.jpg" alt={activity.name} className="w-full h-full object-cover" />
           </div>
           <div className="hidden md:flex flex-col gap-4 h-full">
             {activity.gallery.slice(0, 2).map((img, i) => (

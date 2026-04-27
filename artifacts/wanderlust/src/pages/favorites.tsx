@@ -4,9 +4,11 @@ import { ActivityCard, ActivityCardSkeleton } from "@/components/ui/activity-car
 import { Search, Heart } from "lucide-react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
+import { useT } from "@/lib/i18n";
 
 export default function Favorites() {
   const { data: favorites, isLoading } = useListFavorites();
+  const t = useT();
 
   return (
     <MainLayout>
@@ -14,9 +16,8 @@ export default function Favorites() {
         <div className="container px-4">
           <div className="flex items-center gap-3 mb-2">
             <Heart className="w-8 h-8 text-primary fill-primary" />
-            <h1 className="text-4xl font-serif font-bold">My Favorites</h1>
+            <h1 className="text-4xl font-serif font-bold">{t("favorites.title")}</h1>
           </div>
-          <p className="text-muted-foreground text-lg">Your curated collection of adventures.</p>
         </div>
       </div>
 
@@ -32,12 +33,9 @@ export default function Favorites() {
             <div className="bg-muted w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
               <Heart className="w-10 h-10 text-muted-foreground" />
             </div>
-            <h3 className="text-2xl font-serif font-bold mb-2">No favorites yet</h3>
-            <p className="text-muted-foreground max-w-md mx-auto mb-6">
-              You haven't saved any adventures to your favorites list. Start exploring to build your dream itinerary.
-            </p>
+            <h3 className="text-2xl font-serif font-bold mb-2">{t("favorites.empty")}</h3>
             <Link href="/discover">
-              <Button size="lg">Discover Adventures</Button>
+              <Button size="lg">{t("discover.title")}</Button>
             </Link>
           </div>
         ) : (

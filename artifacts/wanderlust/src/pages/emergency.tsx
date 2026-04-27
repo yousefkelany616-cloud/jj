@@ -3,12 +3,15 @@ import { useListCountries } from "@workspace/api-client-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Phone, ShieldAlert, HeartPulse, Building, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useT } from "@/lib/i18n";
 
 export default function Emergency() {
   const { data: countries, isLoading } = useListCountries();
   const [search, setSearch] = useState("");
+  const t = useT();
 
   const filteredCountries = countries?.filter(c => 
     c.name.toLowerCase().includes(search.toLowerCase())
@@ -23,8 +26,8 @@ export default function Emergency() {
               <ShieldAlert className="w-8 h-8" />
             </div>
             <div>
-              <h1 className="text-4xl font-serif font-bold text-destructive mb-1">Emergency Contacts</h1>
-              <p className="text-destructive/80 text-lg font-medium">Quick access to essential services while traveling.</p>
+              <h1 className="text-4xl font-serif font-bold text-destructive mb-1">{t("emergency.title")}</h1>
+              <p className="text-destructive/80 text-lg font-medium">{t("nav.emergency")}</p>
             </div>
           </div>
         </div>
@@ -32,10 +35,10 @@ export default function Emergency() {
 
       <div className="container px-4 py-8 max-w-4xl">
         <div className="relative mb-12">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-          <Input 
-            placeholder="Find a country..." 
-            className="pl-12 h-14 text-lg bg-background shadow-sm rounded-xl"
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground rtl:left-auto rtl:right-4" />
+          <Input
+            placeholder={t("discover.searchPlaceholder")}
+            className="pl-12 h-14 text-lg bg-background shadow-sm rounded-xl rtl:pl-4 rtl:pr-12"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -74,10 +77,10 @@ export default function Emergency() {
                       Let's just show a button "View Emergency Info" that goes to `/countries/:code`. */}
                       <div className="p-6 flex flex-col justify-center items-center text-center">
                         <Phone className="w-8 h-8 text-primary mb-3" />
-                        <h4 className="font-semibold mb-2">Need Help?</h4>
-                        <p className="text-sm text-muted-foreground mb-4">View full emergency contacts and embassy information.</p>
+                        <h4 className="font-semibold mb-2">{t("emergency.title")}</h4>
+                        <p className="text-sm text-muted-foreground mb-4">{t("country.emergency")}</p>
                         <Button variant="outline" className="w-full" asChild>
-                          <a href={`/countries/${country.code}`}>View Details</a>
+                          <a href={`/countries/${country.code}`}>{t("common.viewDetails")}</a>
                         </Button>
                       </div>
                     </div>

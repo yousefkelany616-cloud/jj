@@ -5,10 +5,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Compass, Trophy, Route, Star, Heart, Lock } from "lucide-react";
 import { motion } from "framer-motion";
+import { useT } from "@/lib/i18n";
 
 export default function Profile() {
   const { data: session } = useGetSession();
   const user = session?.user;
+  const t = useT();
 
   if (!user) return null;
 
@@ -29,11 +31,11 @@ export default function Profile() {
               <div className="flex flex-wrap justify-center md:justify-start gap-4">
                 <div className="flex items-center gap-2 bg-background px-4 py-2 rounded-full shadow-sm border border-border/50">
                   <Route className="w-5 h-5 text-primary" />
-                  <span className="font-semibold">{user.completedTripsCount} Trips</span>
+                  <span className="font-semibold">{user.completedTripsCount} {t("nav.myTrips")}</span>
                 </div>
                 <div className="flex items-center gap-2 bg-background px-4 py-2 rounded-full shadow-sm border border-border/50">
                   <Heart className="w-5 h-5 text-primary" />
-                  <span className="font-semibold">{user.favoritesCount} Favorites</span>
+                  <span className="font-semibold">{user.favoritesCount} {t("nav.favorites")}</span>
                 </div>
               </div>
             </div>
@@ -44,7 +46,7 @@ export default function Profile() {
       <div className="container px-4 py-12">
         <div className="flex items-center gap-3 mb-8">
           <Trophy className="w-8 h-8 text-yellow-500" />
-          <h2 className="text-3xl font-serif font-bold">Achievements</h2>
+          <h2 className="text-3xl font-serif font-bold">{t("profile.achievements")}</h2>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

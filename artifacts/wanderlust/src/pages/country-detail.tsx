@@ -5,8 +5,10 @@ import { ActivityCard } from "@/components/ui/activity-card";
 import { MapPin, Phone, ShieldAlert, HeartPulse, Building, Sun } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useT } from "@/lib/i18n";
 
 export default function CountryDetail() {
+  const t = useT();
   const { code } = useParams<{ code: string }>();
   const { data: country, isLoading } = useGetCountry(code, {
     query: { enabled: !!code, queryKey: getGetCountryQueryKey(code) },
@@ -59,11 +61,11 @@ export default function CountryDetail() {
           <div className="flex gap-6 text-white/90">
             <div className="flex items-center gap-2">
               <Sun className="w-5 h-5" />
-              <span>Best Season: {country.bestSeason}</span>
+              <span>{t("country.bestSeason")}: {country.bestSeason}</span>
             </div>
             <div className="flex items-center gap-2">
               <MapPin className="w-5 h-5" />
-              <span>Currency: {country.currency}</span>
+              <span>{t("country.currency")}: {country.currency}</span>
             </div>
           </div>
         </div>
@@ -99,14 +101,14 @@ export default function CountryDetail() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-destructive">
                   <ShieldAlert className="w-5 h-5" />
-                  Emergency Information
+                  {t("country.emergency")}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between p-3 bg-background rounded-lg border">
                   <div className="flex items-center gap-3">
                     <div className="p-2 bg-muted rounded-md"><Phone className="w-4 h-4" /></div>
-                    <span className="font-medium">Police</span>
+                    <span className="font-medium">{t("emergency.police")}</span>
                   </div>
                   <a href={`tel:${country.emergency.police}`} className="text-primary font-bold hover:underline">
                     {country.emergency.police}
@@ -115,7 +117,7 @@ export default function CountryDetail() {
                 <div className="flex items-center justify-between p-3 bg-background rounded-lg border">
                   <div className="flex items-center gap-3">
                     <div className="p-2 bg-muted rounded-md"><HeartPulse className="w-4 h-4 text-destructive" /></div>
-                    <span className="font-medium">Ambulance</span>
+                    <span className="font-medium">{t("emergency.ambulance")}</span>
                   </div>
                   <a href={`tel:${country.emergency.ambulance}`} className="text-primary font-bold hover:underline">
                     {country.emergency.ambulance}
@@ -124,7 +126,7 @@ export default function CountryDetail() {
                 <div className="flex items-center justify-between p-3 bg-background rounded-lg border">
                   <div className="flex items-center gap-3">
                     <div className="p-2 bg-muted rounded-md"><Phone className="w-4 h-4 text-orange-500" /></div>
-                    <span className="font-medium">Fire</span>
+                    <span className="font-medium">{t("emergency.fire")}</span>
                   </div>
                   <a href={`tel:${country.emergency.fire}`} className="text-primary font-bold hover:underline">
                     {country.emergency.fire}
@@ -135,7 +137,7 @@ export default function CountryDetail() {
                   <div className="flex items-center justify-between p-3 bg-background rounded-lg border">
                     <div className="flex items-center gap-3">
                       <div className="p-2 bg-muted rounded-md"><ShieldAlert className="w-4 h-4 text-primary" /></div>
-                      <span className="font-medium text-sm">Tourist Police</span>
+                      <span className="font-medium text-sm">{t("emergency.touristPolice")}</span>
                     </div>
                     <a href={`tel:${country.emergency.touristPolice}`} className="text-primary font-bold hover:underline text-sm">
                       {country.emergency.touristPolice}
@@ -147,7 +149,7 @@ export default function CountryDetail() {
                   <div className="flex items-center justify-between p-3 bg-background rounded-lg border">
                     <div className="flex items-center gap-3">
                       <div className="p-2 bg-muted rounded-md"><Building className="w-4 h-4" /></div>
-                      <span className="font-medium text-sm">Embassy</span>
+                      <span className="font-medium text-sm">{t("emergency.embassy")}</span>
                     </div>
                     <a href={`tel:${country.emergency.embassyHotline}`} className="text-primary font-bold hover:underline text-sm">
                       {country.emergency.embassyHotline}

@@ -8,12 +8,14 @@ import { Compass, ArrowRight, Search, Map as MapIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useT } from "@/lib/i18n";
 
 export default function Home() {
   const { data: trending, isLoading: trendingLoading } = useGetTrendingDestinations();
   const { data: featured, isLoading: featuredLoading } = useGetFeaturedActivities();
   const [search, setSearch] = useState("");
   const [, setLocation] = useLocation();
+  const t = useT();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,23 +43,23 @@ export default function Home() {
           >
             <Compass className="w-16 h-16 mx-auto mb-6 opacity-80" />
             <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6 tracking-tight">
-              The World is Yours<br />to Explore
+              {t("home.title")}
             </h1>
             <p className="text-xl md:text-2xl text-white/90 max-w-2xl mx-auto mb-10 font-light">
-              Discover breathtaking trails, hidden oases, and epic adventures across the Arab world and beyond.
+              {t("home.subtitle")}
             </p>
 
             <form onSubmit={handleSearch} className="max-w-2xl mx-auto relative flex items-center">
-              <Search className="absolute left-4 w-6 h-6 text-muted-foreground" />
-              <Input 
+              <Search className="absolute left-4 w-6 h-6 text-muted-foreground rtl:left-auto rtl:right-4" />
+              <Input
                 type="text"
-                placeholder="Where to next? (e.g., Petra, Wadi Rum, Hiking...)"
-                className="w-full pl-12 pr-32 h-16 text-lg rounded-full bg-background/95 backdrop-blur border-none shadow-xl text-foreground placeholder:text-muted-foreground"
+                placeholder={t("home.searchPlaceholder")}
+                className="w-full pl-12 pr-32 h-16 text-lg rounded-full bg-background/95 backdrop-blur border-none shadow-xl text-foreground placeholder:text-muted-foreground rtl:pl-32 rtl:pr-12"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
-              <Button type="submit" size="lg" className="absolute right-2 rounded-full h-12 px-6">
-                Search
+              <Button type="submit" size="lg" className="absolute right-2 rounded-full h-12 px-6 rtl:right-auto rtl:left-2">
+                {t("home.search")}
               </Button>
             </form>
           </motion.div>
@@ -69,12 +71,11 @@ export default function Home() {
         <div className="container px-4">
           <div className="flex justify-between items-end mb-10">
             <div>
-              <h2 className="text-3xl font-serif font-bold mb-2">Featured Expeditions</h2>
-              <p className="text-muted-foreground">Hand-picked adventures for your next journey.</p>
+              <h2 className="text-3xl font-serif font-bold mb-2">{t("home.featured")}</h2>
             </div>
             <Link href="/discover">
               <Button variant="ghost" className="hidden sm:flex group">
-                View all <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                {t("home.viewAll")} <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform rtl:rotate-180 rtl:ml-0 rtl:mr-2" />
               </Button>
             </Link>
           </div>
@@ -102,12 +103,11 @@ export default function Home() {
         <div className="container px-4">
           <div className="flex justify-between items-end mb-10">
             <div>
-              <h2 className="text-3xl font-serif font-bold mb-2">Trending Destinations</h2>
-              <p className="text-muted-foreground">The most popular countries right now.</p>
+              <h2 className="text-3xl font-serif font-bold mb-2">{t("home.trending")}</h2>
             </div>
             <Link href="/countries">
               <Button variant="ghost" className="hidden sm:flex group">
-                All destinations <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                {t("home.viewAll")} <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform rtl:rotate-180 rtl:ml-0 rtl:mr-2" />
               </Button>
             </Link>
           </div>

@@ -11,6 +11,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { getGetSessionQueryKey } from "@workspace/api-client-react";
 import { Compass } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useT } from "@/lib/i18n";
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -23,6 +24,7 @@ export default function Login() {
   const loginMutation = useLogin();
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const t = useT();
 
   if (session?.user) {
     setLocation("/dashboard");
@@ -57,16 +59,16 @@ export default function Login() {
         <div className="absolute inset-0 flex items-center justify-center p-12">
           <div className="max-w-md text-white text-center">
             <Compass className="w-16 h-16 mx-auto mb-8 opacity-80" />
-            <h1 className="text-4xl font-serif font-bold mb-4">Adventure Awaits</h1>
-            <p className="text-lg text-white/80">Turn your wanderlust into action. Discover, plan, and track your journeys across the Arab world and beyond.</p>
+            <h1 className="text-4xl font-serif font-bold mb-4">{t("login.title")}</h1>
+            <p className="text-lg text-white/80">{t("home.subtitle")}</p>
           </div>
         </div>
       </div>
       <div className="flex items-center justify-center p-8 bg-background">
         <div className="w-full max-w-sm space-y-8">
-          <div className="text-center lg:text-left">
-            <h2 className="text-3xl font-serif font-bold tracking-tight">Sign In</h2>
-            <p className="text-muted-foreground mt-2">Enter your details to continue your journey.</p>
+          <div className="text-center lg:text-left rtl:lg:text-right">
+            <h2 className="text-3xl font-serif font-bold tracking-tight">{t("nav.signIn")}</h2>
+            <p className="text-muted-foreground mt-2">{t("login.subtitle")}</p>
           </div>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -75,7 +77,7 @@ export default function Login() {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <Label>Name</Label>
+                    <Label>{t("login.name")}</Label>
                     <FormControl>
                       <Input placeholder="Ibn Battuta" {...field} />
                     </FormControl>
@@ -88,7 +90,7 @@ export default function Login() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <Label>Email</Label>
+                    <Label>{t("login.email")}</Label>
                     <FormControl>
                       <Input type="email" placeholder="explorer@wanderlust.com" {...field} />
                     </FormControl>
@@ -97,7 +99,7 @@ export default function Login() {
                 )}
               />
               <Button type="submit" className="w-full" disabled={loginMutation.isPending}>
-                {loginMutation.isPending ? "Signing in..." : "Start Exploring"}
+                {loginMutation.isPending ? t("common.loading") : t("login.submit")}
               </Button>
             </form>
           </Form>

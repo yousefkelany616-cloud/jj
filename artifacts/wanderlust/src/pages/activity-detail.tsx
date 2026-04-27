@@ -8,6 +8,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
+import { useT } from "@/lib/i18n";
 
 // Fix leaflet icon
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -21,7 +22,8 @@ export default function ActivityDetail() {
   const { id } = useParams<{ id: string }>();
   const queryClient = useQueryClient();
   const { toast } = useToast();
-  
+  const t = useT();
+
   const { data: activity, isLoading } = useGetActivity(id, {
     query: { enabled: !!id, queryKey: getGetActivityQueryKey(id) },
   });
@@ -38,9 +40,9 @@ export default function ActivityDetail() {
         await addFavorite.mutateAsync({ id });
       }
       queryClient.invalidateQueries({ queryKey: getGetActivityQueryKey(id) });
-      toast({ title: activity.isFavorited ? "Removed from favorites" : "Added to favorites" });
+      toast({ title: activity.isFavorited ? t("activity.removeFavorite") : t("activity.addFavorite") });
     } catch (e) {
-      toast({ title: "Please login to add favorites", variant: "destructive" });
+      toast({ title: t("nav.signIn"), variant: "destructive" });
     }
   };
 
@@ -75,7 +77,7 @@ export default function ActivityDetail() {
               <div className="flex items-center text-yellow-500">
                 <Star className="w-4 h-4 fill-current mr-1" />
                 <span className="font-medium text-foreground">{activity.rating.toFixed(1)}</span>
-                <span className="ml-1 text-muted-foreground">({activity.reviewCount} reviews)</span>
+                <span className="ml-1 text-muted-foreground">({activity.reviewCount} {t("activity.reviews")})</span>
               </div>
             </div>
           </div>
@@ -90,13 +92,13 @@ export default function ActivityDetail() {
             <Link href={`/activities/${activity.id}/packing`}>
               <Button variant="outline" className="gap-2">
                 <Shield className="w-4 h-4" />
-                Packing List
+                {t("packing.title")}
               </Button>
             </Link>
             <Link href="/trip-tracker">
               <Button className="gap-2">
                 <Navigation className="w-4 h-4" />
-                Start Tracking
+                {t("nav.trackTrip")}
               </Button>
             </Link>
           </div>
@@ -126,14 +128,14 @@ export default function ActivityDetail() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           <div className="lg:col-span-2 space-y-12">
             <section>
-              <h2 className="text-3xl font-serif font-bold mb-6">About this adventure</h2>
+              <h2 className="text-3xl font-serif font-bold mb-6">{t("activity.about")}</h2>
               <div className="prose prose-lg dark:prose-invert">
                 <p className="text-muted-foreground leading-relaxed">{activity.description}</p>
               </div>
             </section>
 
             <section>
-              <h2 className="text-2xl font-serif font-bold mb-6">Highlights</h2>
+              <h2 className="text-2xl font-serif font-bold mb-6">{t("activity.highlights")}</h2>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {activity.highlights.map((highlight, i) => (
                   <li key={i} className="flex items-start gap-3 bg-muted/30 p-4 rounded-xl border border-border/50">
@@ -145,7 +147,7 @@ export default function ActivityDetail() {
             </section>
             
             <section>
-              <h2 className="text-2xl font-serif font-bold mb-6">Location</h2>
+              <h2 className="text-2xl font-serif font-bold mb-6">{t("activity.location")}</h2>
               <div className="h-[400px] rounded-2xl overflow-hidden border">
                 <MapContainer center={[activity.latitude, activity.longitude]} zoom={13} scrollWheelZoom={false} className="w-full h-full">
                   <TileLayer
@@ -162,43 +164,43 @@ export default function ActivityDetail() {
 
           <div className="space-y-6">
             <div className="bg-muted/30 rounded-2xl p-6 border border-border/50 space-y-6 sticky top-24">
-              <h3 className="font-serif font-bold text-xl">Quick Facts</h3>
-              
+              <h3 className="font-serif font-bold text-xl">{t("activity.quickFacts")}</h3>
+
               <div className="flex items-center gap-4">
                 <div className="bg-background p-3 rounded-xl shadow-sm"><Clock className="w-6 h-6 text-primary" /></div>
                 <div>
-                  <div className="text-sm text-muted-foreground">Duration</div>
-                  <div className="font-semibold">{activity.durationDays} Days</div>
+                  <div className="text-sm text-muted-foreground">{t("activity.duration")}</div>
+                  <div className="font-semibold">{activity.durationDays} {t("activity.days")}</div>
                 </div>
               </div>
-              
+
               <div className="flex items-center gap-4">
                 <div className="bg-background p-3 rounded-xl shadow-sm"><DollarSign className="w-6 h-6 text-primary" /></div>
                 <div>
-                  <div className="text-sm text-muted-foreground">Est. Cost</div>
+                  <div className="text-sm text-muted-foreground">{t("activity.cost")}</div>
                   <div className="font-semibold">${activity.estimatedCost}</div>
                 </div>
               </div>
-              
+
               <div className="flex items-center gap-4">
                 <div className="bg-background p-3 rounded-xl shadow-sm"><CloudSun className="w-6 h-6 text-primary" /></div>
                 <div>
-                  <div className="text-sm text-muted-foreground">Best Season</div>
+                  <div className="text-sm text-muted-foreground">{t("activity.bestTime")}</div>
                   <div className="font-semibold">{activity.bestTimeToVisit}</div>
                 </div>
               </div>
-              
+
               <hr className="border-border" />
-              
+
               <div>
-                <h4 className="font-medium mb-3">Required Gear</h4>
+                <h4 className="font-medium mb-3">{t("activity.gear")}</h4>
                 <div className="flex flex-wrap gap-2">
                   {activity.requiredGear.map(gear => (
                     <Badge key={gear} variant="outline" className="bg-background">{gear}</Badge>
                   ))}
                 </div>
                 <Link href={`/activities/${activity.id}/packing`}>
-                  <Button variant="link" className="px-0 mt-2 text-primary">View full packing list →</Button>
+                  <Button variant="link" className="px-0 mt-2 text-primary">{t("activity.packing")}</Button>
                 </Link>
               </div>
             </div>

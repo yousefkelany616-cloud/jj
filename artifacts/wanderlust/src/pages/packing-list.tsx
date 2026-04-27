@@ -8,8 +8,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { ArrowLeft, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useT } from "@/lib/i18n";
 
 export default function PackingList() {
+  const t = useT();
   const { id } = useParams<{ id: string }>();
   const { data: list, isLoading } = useGetPackingList(id, {
     query: { enabled: !!id, queryKey: getGetPackingListQueryKey(id) }
@@ -55,10 +57,10 @@ export default function PackingList() {
         <div className="container px-4">
           <Link href={`/activities/${id}`}>
             <Button variant="ghost" className="pl-0 mb-4 hover:bg-transparent hover:text-primary">
-              <ArrowLeft className="w-4 h-4 mr-2" /> Back to activity
+              <ArrowLeft className="w-4 h-4 mr-2 rtl:rotate-180" /> {t("common.back")}
             </Button>
           </Link>
-          <h1 className="text-4xl font-serif font-bold mb-2">Packing List</h1>
+          <h1 className="text-4xl font-serif font-bold mb-2">{t("packing.title")}</h1>
           <p className="text-muted-foreground text-lg">{list.activityName}</p>
         </div>
       </div>
@@ -69,13 +71,13 @@ export default function PackingList() {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className={`w-6 h-6 ${progress === 100 ? 'text-green-500' : 'text-primary'}`} />
-                <h2 className="text-xl font-bold">Preparation Progress</h2>
+                <h2 className="text-xl font-bold">{t("packing.progress")}</h2>
               </div>
               <span className="font-bold text-lg">{progress}%</span>
             </div>
             <Progress value={progress} className="h-3" />
             <p className="text-sm text-muted-foreground mt-3 text-center">
-              {checkedCount} of {totalItems} items packed
+              {checkedCount} / {totalItems}
             </p>
           </CardContent>
         </Card>
@@ -101,7 +103,7 @@ export default function PackingList() {
                         {item.name}
                       </Label>
                       {item.essential && (
-                        <p className="text-xs text-destructive font-medium uppercase tracking-wider">Essential</p>
+                        <p className="text-xs text-destructive font-medium uppercase tracking-wider">{t("packing.essential")}</p>
                       )}
                     </div>
                   </div>

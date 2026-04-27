@@ -51,17 +51,19 @@ const en: Dict = {
   "activity.addFavorite": "Add to favorites",
   "activity.removeFavorite": "Remove from favorites",
   "activity.duration": "Duration",
-  "activity.cost": "Estimated cost",
+  "activity.cost": "Est. Cost",
   "activity.difficulty": "Difficulty",
-  "activity.bestTime": "Best time to visit",
+  "activity.bestTime": "Best Season",
   "activity.weather": "Weather",
   "activity.gear": "Required Gear",
   "activity.highlights": "Highlights",
   "activity.location": "Location",
-  "activity.reviews": "Reviews",
-  "activity.packing": "View Packing List",
-  "activity.days": "days",
-  "activity.day": "day",
+  "activity.reviews": "reviews",
+  "activity.packing": "View full packing list →",
+  "activity.about": "About this adventure",
+  "activity.quickFacts": "Quick Facts",
+  "activity.days": "Days",
+  "activity.day": "Day",
 
   // Countries
   "countries.title": "Destinations",
@@ -93,9 +95,10 @@ const en: Dict = {
   "login.submit": "Continue",
 
   // Packing
-  "packing.title": "Smart Packing List",
+  "packing.title": "Packing List",
   "packing.essential": "Essential",
   "packing.optional": "Optional",
+  "packing.progress": "Preparation Progress",
 
   // Favorites
   "favorites.title": "Your Favorites",
@@ -170,13 +173,15 @@ const ar: Dict = {
   "activity.duration": "المدة",
   "activity.cost": "التكلفة التقديرية",
   "activity.difficulty": "المستوى",
-  "activity.bestTime": "أفضل وقت للزيارة",
+  "activity.bestTime": "أفضل موسم",
   "activity.weather": "الطقس",
   "activity.gear": "المعدات المطلوبة",
   "activity.highlights": "أبرز المعالم",
   "activity.location": "الموقع",
-  "activity.reviews": "التقييمات",
-  "activity.packing": "عرض قائمة الأمتعة",
+  "activity.reviews": "تقييم",
+  "activity.packing": "عرض قائمة الأمتعة الكاملة ←",
+  "activity.about": "عن هذه المغامرة",
+  "activity.quickFacts": "معلومات سريعة",
   "activity.days": "أيام",
   "activity.day": "يوم",
 
@@ -210,9 +215,10 @@ const ar: Dict = {
   "login.submit": "متابعة",
 
   // Packing
-  "packing.title": "قائمة الأمتعة الذكية",
+  "packing.title": "قائمة الأمتعة",
   "packing.essential": "أساسي",
   "packing.optional": "اختياري",
+  "packing.progress": "تقدم التجهيز",
 
   // Favorites
   "favorites.title": "مفضلاتك",

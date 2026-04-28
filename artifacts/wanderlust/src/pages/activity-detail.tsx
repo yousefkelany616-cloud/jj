@@ -8,7 +8,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
-import { useT } from "@/lib/i18n";
+import { useI18n } from "@/lib/i18n";
+import { localizeActivity } from "@/lib/activity-translations";
 
 // Fix leaflet icon
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -22,11 +23,13 @@ export default function ActivityDetail() {
   const { id } = useParams<{ id: string }>();
   const queryClient = useQueryClient();
   const { toast } = useToast();
-  const t = useT();
+  const { t, lang } = useI18n();
 
-  const { data: activity, isLoading } = useGetActivity(id, {
+  const { data: rawActivity, isLoading } = useGetActivity(id, {
     query: { enabled: !!id, queryKey: getGetActivityQueryKey(id) },
   });
+
+  const activity = localizeActivity(rawActivity, lang);
 
   const addFavorite = useAddFavorite();
   const removeFavorite = useRemoveFavorite();

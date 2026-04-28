@@ -4,13 +4,17 @@ import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
 import { Star, Clock, MapPin, DollarSign, CloudSun } from "lucide-react";
 import { motion } from "framer-motion";
+import { useI18n } from "@/lib/i18n";
+import { localizeActivity } from "@/lib/activity-translations";
 
 interface ActivityCardProps {
   activity: Activity;
   index?: number;
 }
 
-export function ActivityCard({ activity, index = 0 }: ActivityCardProps) {
+export function ActivityCard({ activity: rawActivity, index = 0 }: ActivityCardProps) {
+  const { lang } = useI18n();
+  const activity = localizeActivity(rawActivity, lang)!;
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}

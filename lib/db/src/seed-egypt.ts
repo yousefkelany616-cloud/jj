@@ -62,12 +62,13 @@ const IMAGES: Record<string, string[]> = {
     "https://a1toureg.com/media/galleries/overnight-snorkeling-trip-at-sataya-dolphin-reef-from-marsa-alam-24158.webp",
     "https://a1toureg.com/media/galleries/overnight-snorkeling-trip-at-sataya-dolphin-reef-from-marsa-alam-24161.webp",
   ],
-  // Wadi El Gemal National Park — mangroves + Ababda Bedouin desert camp.
+  // Wadi El Gemal National Park — Bedouin desert camping, mangrove channels,
+  // Eastern-Desert 4x4 tracks, and camel-back excursions with the Ababda.
   wadiel: [
-    "https://gorgoniabeach.com/wp-content/uploads/2021/11/gorgonia-beach-resort_marsa-alam_red-see_wadielgemal_gallery-24.jpg",
-    "https://gorgoniabeach.com/wp-content/uploads/2021/11/gorgonia-beach-resort_marsa-alam_red-see_wadielgemal_gallery-27.jpg",
-    "https://gorgoniabeach.com/wp-content/uploads/2021/11/gorgonia-beach-resort_marsa-alam_red-see_wadielgemal_gallery-12.jpg",
-    "https://gorgoniabeach.com/wp-content/uploads/2021/11/gorgonia-beach-resort_marsa-alam_red-see_wadielgemal_gallery-25.jpg",
+    "https://megatoursegypt.com/wp-content/uploads/2025/09/super-Safari-5-1-636x426.jpg",
+    "https://images.trvl-media.com/place/553248635997986417/765be985-986a-4f36-860a-1413e4af87ca.jpg?impolicy=fcrop&w=1040&h=580&q=mediumHigh",
+    "https://a1toureg.com/media/toursItenary/24/10/27/c617dc85-ca50-4a0b-a12d-5d4119bcad52_wadi-el-gemal-desert-day-tou_KnH2EVp.webp",
+    "https://www.egypttoursportal.com/images/2024/01/Wadi-El-Gemal-National-Park-Camping-Spots-in-Egypt-Egypt-Tours-Portal.jpg",
   ],
 };
 
@@ -353,7 +354,7 @@ const ACTIVITIES: ActivitySeed[] = [
   },
 ];
 
-const SEED_VERSION = "egypt-only-v2-images.1";
+const SEED_VERSION = "egypt-only-v3-images.1";
 const SEED_LOCK_NS = 7327342;
 const SEED_LOCK_ID = 1;
 

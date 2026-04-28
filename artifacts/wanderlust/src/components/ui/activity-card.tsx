@@ -1,3 +1,4 @@
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Activity } from "@workspace/api-client-react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -12,9 +13,80 @@ interface ActivityCardProps {
   index?: number;
 }
 
+const SLIDE_INTERVAL_MS = 3000;
+
+function CardImageCarousel({ images, alt }: { images: string[]; alt: string }) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const node = containerRef.current;
+    if (!node) return;
+    if (typeof IntersectionObserver === "undefined") {
+      setIsVisible(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          setIsVisible(entry.isIntersecting);
+        }
+      },
+      { threshold: 0.25 },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (images.length <= 1 || !isVisible) return;
+    const id = setInterval(() => {
+      setActiveIndex((i) => (i + 1) % images.length);
+    }, SLIDE_INTERVAL_MS);
+    return () => clearInterval(id);
+  }, [images.length, isVisible]);
+
+  if (images.length <= 1) {
+    return (
+      <img
+        src={images[0]}
+        alt={alt}
+        className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700"
+      />
+    );
+  }
+
+  return (
+    <div ref={containerRef} className="absolute inset-0 w-full h-full">
+      {images.map((src, i) => (
+        <img
+          key={src}
+          src={src}
+          alt={alt}
+          loading={i === 0 ? "eager" : "lazy"}
+          aria-hidden={i === activeIndex ? undefined : true}
+          className={
+            "absolute inset-0 object-cover w-full h-full group-hover:scale-105 transition-all duration-700 ease-in-out " +
+            (i === activeIndex ? "opacity-100" : "opacity-0")
+          }
+        />
+      ))}
+    </div>
+  );
+}
+
 export function ActivityCard({ activity: rawActivity, index = 0 }: ActivityCardProps) {
   const { lang } = useI18n();
   const activity = localizeActivity(rawActivity, lang)!;
+
+  const slides = useMemo(() => {
+    const ordered = [activity.heroImage, ...(activity.gallery ?? [])].filter(
+      (s): s is string => typeof s === "string" && s.length > 0,
+    );
+    return Array.from(new Set(ordered));
+  }, [activity.heroImage, activity.gallery]);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -24,12 +96,8 @@ export function ActivityCard({ activity: rawActivity, index = 0 }: ActivityCardP
       <Link href={`/activities/${activity.id}`}>
         <Card className="overflow-hidden h-full flex flex-col hover-elevate cursor-pointer border-transparent hover:border-primary/20 transition-all duration-300">
           <div className="relative aspect-[4/3] overflow-hidden group">
-            <img
-              src={activity.heroImage}
-              alt={activity.name}
-              className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
+            <CardImageCarousel images={slides} alt={activity.name} />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80 pointer-events-none" />
             <div className="absolute top-3 left-3 flex gap-2">
               <Badge variant="secondary" className="bg-background/90 backdrop-blur-sm hover:bg-background/90 text-xs font-medium">
                 {activity.type}

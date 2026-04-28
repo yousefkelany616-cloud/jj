@@ -23,6 +23,7 @@ Seed data lives in `lib/db/src/seed-egypt.ts` and is shared between the CLI scri
 - **To roll out a new seed version** (e.g. add an activity), bump `SEED_VERSION` in `lib/db/src/seed-egypt.ts` so the marker mismatches and the next deploy auto-applies the change.
 - **Image policy**: every URL in the `IMAGES` map of `seed-egypt.ts` must be a verified location-specific Egyptian photo (no generic stock or other-country imagery). Each URL is GET-checked to return 200 + `image/*` from a hot-link-friendly host. The activity detail page hero (`activity-detail.tsx`) renders `activity.heroImage` — never a hardcoded URL — so the per-activity seed values determine what users see.
 - **Gallery convention**: in each `IMAGES[key]` array, index `0` is the hero and indices `1..N` are the gallery (3–5 unique photos per activity). The `gallery()` helper returns `slice(1)` so the hero is never duplicated as a thumbnail on the detail page.
+- **List-endpoint exposes gallery**: the `Activity` schema (used by `/api/activities`, `/api/activities/featured`, `/api/activities/recommended`, etc.) now returns the `gallery` array as well as `heroImage`. The home/discover `ActivityCard` uses both to render an auto-playing image carousel: slides = unique `[heroImage, ...gallery]`, advanced every 3s with an opacity fade, and paused via `IntersectionObserver` when the card is off-screen. Single-image activities render a static `<img>`. Component: `artifacts/wanderlust/src/components/ui/activity-card.tsx`.
 
 ## Localization (EN/AR)
 

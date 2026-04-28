@@ -117,6 +117,7 @@ export const GetCountryResponse = zod.object({
       rating: zod.number(),
       reviewCount: zod.number(),
       heroImage: zod.string(),
+      gallery: zod.array(zod.string()),
       shortDescription: zod.string(),
       weather: zod.string(),
     }),
@@ -151,6 +152,7 @@ export const ListActivitiesResponseItem = zod.object({
   rating: zod.number(),
   reviewCount: zod.number(),
   heroImage: zod.string(),
+  gallery: zod.array(zod.string()),
   shortDescription: zod.string(),
   weather: zod.string(),
 });
@@ -205,6 +207,7 @@ export const GetRecommendedActivitiesResponseItem = zod.object({
   rating: zod.number(),
   reviewCount: zod.number(),
   heroImage: zod.string(),
+  gallery: zod.array(zod.string()),
   shortDescription: zod.string(),
   weather: zod.string(),
 });
@@ -229,6 +232,7 @@ export const GetFeaturedActivitiesResponseItem = zod.object({
   rating: zod.number(),
   reviewCount: zod.number(),
   heroImage: zod.string(),
+  gallery: zod.array(zod.string()),
   shortDescription: zod.string(),
   weather: zod.string(),
 });
@@ -406,6 +410,7 @@ export const ListFavoritesResponseItem = zod.object({
   rating: zod.number(),
   reviewCount: zod.number(),
   heroImage: zod.string(),
+  gallery: zod.array(zod.string()),
   shortDescription: zod.string(),
   weather: zod.string(),
 });
@@ -494,6 +499,7 @@ export const GetDashboardSummaryResponse = zod.object({
       rating: zod.number(),
       reviewCount: zod.number(),
       heroImage: zod.string(),
+      gallery: zod.array(zod.string()),
       shortDescription: zod.string(),
       weather: zod.string(),
     }),

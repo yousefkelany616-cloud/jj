@@ -15,6 +15,7 @@ export function activityToSummary(activity: Activity, country: Country) {
     rating: activity.rating,
     reviewCount: activity.reviewCount,
     heroImage: activity.heroImage,
+    gallery: activity.gallery,
     shortDescription: activity.shortDescription,
     weather: activity.weather,
   };
@@ -27,7 +28,6 @@ export function activityToDetail(
 ) {
   return {
     ...activityToSummary(activity, country),
-    gallery: activity.gallery,
     description: activity.description,
     bestTimeToVisit: activity.bestTimeToVisit,
     latitude: activity.latitude,

@@ -569,12 +569,16 @@ components:
           type: integer
         heroImage:
           type: string
+        gallery:
+          type: array
+          items:
+            type: string
         shortDescription:
           type: string
         weather:
           type: string
       required:
-        [id, name, type, countryCode, countryName, countryFlag, city, difficulty, durationDays, estimatedCost, rating, reviewCount, heroImage, shortDescription, weather]
+        [id, name, type, countryCode, countryName, countryFlag, city, difficulty, durationDays, estimatedCost, rating, reviewCount, heroImage, gallery, shortDescription, weather]
 
     ActivityDetail:
       type: object

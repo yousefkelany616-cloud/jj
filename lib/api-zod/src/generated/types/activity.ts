@@ -20,6 +20,7 @@ export interface Activity {
   rating: number;
   reviewCount: number;
   heroImage: string;
+  gallery: string[];
   shortDescription: string;
   weather: string;
 }

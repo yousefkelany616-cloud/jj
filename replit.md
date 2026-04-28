@@ -22,6 +22,17 @@ Seed data lives in `lib/db/src/seed-egypt.ts` and is shared between the CLI scri
 - **Manual reseed (force)**: `pnpm --filter @workspace/scripts run seed` runs `seedEgypt({ force: true })` which always wipes and reseeds.
 - **To roll out a new seed version** (e.g. add an activity), bump `SEED_VERSION` in `lib/db/src/seed-egypt.ts` so the marker mismatches and the next deploy auto-applies the change.
 
+## Localization (EN/AR)
+
+Language state lives in `artifacts/wanderlust/src/lib/i18n.tsx` (`useI18n()` / `useT()`), persisted to `localStorage` key `wl_lang`; AR also flips `<html dir="rtl">`.
+
+Server APIs return English content. The client translates at render time via per-domain maps:
+
+- `lib/activity-translations.ts` — Arabic copy for the 8 seeded activities (name/city/description/highlights/etc.). Helpers: `localizeActivity()` (full object), `localizeActivityName()` (just the name).
+- `lib/packing-translations.ts` — Arabic strings keyed by the exact English category names (`Documents` / `Clothing` / `Gear` / `Safety & Health`) and item names produced by `artifacts/api-server/src/lib/packing.ts`. Helpers: `localizePackingCategory()`, `localizePackingItem()`. Both fall back to the original string when a key is missing, so newly added server strings never crash the page.
+
+`packing-list.tsx` localizes display only — `item.id` is unchanged across language toggles, so checkbox state in `localStorage` (`packing-<activityId>`) is preserved when switching EN ↔ AR.
+
 ## Auth
 
 Demo passwordless: POST `/api/auth/login` with `{email, name}` sets an httpOnly `wl_session` cookie containing the user id. CORS configured with credentials between web (port 21455) and api-server (port 8080).

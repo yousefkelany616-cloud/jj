@@ -200,6 +200,11 @@ const COUNTRY_AR: Record<string, string> = {
   Egypt: "مصر",
 };
 
+export function localizeActivityName(name: string, lang: Lang): string {
+  if (lang !== "ar") return name;
+  return ACTIVITY_AR[name]?.name ?? name;
+}
+
 export function localizeActivity<T extends Activity | ActivityDetail>(
   activity: T | undefined,
   lang: Lang,

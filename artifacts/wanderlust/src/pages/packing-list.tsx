@@ -8,10 +8,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { ArrowLeft, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useT } from "@/lib/i18n";
+import { useI18n } from "@/lib/i18n";
+import {
+  localizePackingCategory,
+  localizePackingItem,
+} from "@/lib/packing-translations";
+import { localizeActivityName } from "@/lib/activity-translations";
 
 export default function PackingList() {
-  const t = useT();
+  const { t, lang } = useI18n();
   const { id } = useParams<{ id: string }>();
   const { data: list, isLoading } = useGetPackingList(id, {
     query: { enabled: !!id, queryKey: getGetPackingListQueryKey(id) }
@@ -61,7 +66,7 @@ export default function PackingList() {
             </Button>
           </Link>
           <h1 className="text-4xl font-serif font-bold mb-2">{t("packing.title")}</h1>
-          <p className="text-muted-foreground text-lg">{list.activityName}</p>
+          <p className="text-muted-foreground text-lg">{localizeActivityName(list.activityName, lang)}</p>
         </div>
       </div>
 
@@ -85,7 +90,7 @@ export default function PackingList() {
         <div className="grid gap-8">
           {list.categories.map((category) => (
             <div key={category.category}>
-              <h3 className="text-2xl font-serif font-bold mb-4 capitalize border-b pb-2">{category.category}</h3>
+              <h3 className="text-2xl font-serif font-bold mb-4 capitalize border-b pb-2">{localizePackingCategory(category.category, lang)}</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
                 {category.items.map((item) => (
                   <div key={item.id} className="flex items-start space-x-3 p-2 rounded-lg hover:bg-muted/50 transition-colors">
@@ -100,7 +105,7 @@ export default function PackingList() {
                         htmlFor={item.id}
                         className={`text-base cursor-pointer ${checkedItems[item.id] ? 'text-muted-foreground line-through' : 'font-medium'}`}
                       >
-                        {item.name}
+                        {localizePackingItem(item.name, lang)}
                       </Label>
                       {item.essential && (
                         <p className="text-xs text-destructive font-medium uppercase tracking-wider">{t("packing.essential")}</p>

@@ -15,12 +15,15 @@ export default function Discover() {
   const [location] = useLocation();
   const searchParams = new URLSearchParams(window.location.search);
   const initialSearch = searchParams.get("search") || "";
+  const allowedTypes = ["Hiking", "Diving", "Snorkeling", "Camping", "Safari"];
+  const rawInitialType = searchParams.get("type") || "all";
+  const initialType = allowedTypes.includes(rawInitialType) ? rawInitialType : "all";
   
   const [search, setSearch] = useState(initialSearch);
   const debouncedSearch = useDebounce(search, 500);
   
   const [difficulty, setDifficulty] = useState<string>("all");
-  const [type, setType] = useState<string>("all");
+  const [type, setType] = useState<string>(initialType);
 
   const { data: activities, isLoading } = useListActivities({
     search: debouncedSearch || undefined,

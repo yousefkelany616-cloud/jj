@@ -6,7 +6,7 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 
 ## Artifacts
 
-- **wanderlust** (`/`) — Adventure travel discovery app focused on the Arab world. React + Vite + Tailwind, Express API, Postgres + Drizzle, react-leaflet maps, framer-motion animations, dark mode.
+- **wanderlust** (`/`) — Adventure travel discovery app focused on the Arab world. React + Vite + Tailwind, Express API, Postgres + Drizzle, react-leaflet maps, framer-motion animations, dark mode. Home page sections (top → bottom): Hero + search, Featured Adventures, Trending Destinations, Choose Your Adventure (5 type tiles → /discover?type=…), Why Egypt (4-stat strip), Plan Your Trip (3 essentials cards), Track Your Journey CTA. The Discover page reads optional `search` and `type` URL params on first load (type allowlist: Hiking/Diving/Snorkeling/Camping/Safari, case-sensitive to match DB values).
 - **api-server** — Express API powering Wanderlust. Endpoints: auth, countries, activities (with filters), trips (browser-geolocation tracker), reviews, favorites, packing lists, dashboard summary + trending.
 - **mockup-sandbox** — Canvas component preview server.
 

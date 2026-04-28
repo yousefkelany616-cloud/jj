@@ -50,10 +50,11 @@ export default function Discover() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">{t("discover.anyDifficulty")}</SelectItem>
-                  <SelectItem value="easy">Easy</SelectItem>
-                  <SelectItem value="moderate">Moderate</SelectItem>
-                  <SelectItem value="hard">Hard</SelectItem>
-                  <SelectItem value="extreme">Extreme</SelectItem>
+                  <SelectItem value="Easy">Easy</SelectItem>
+                  <SelectItem value="Moderate">Moderate</SelectItem>
+                  <SelectItem value="Intermediate">Intermediate</SelectItem>
+                  <SelectItem value="Advanced">Advanced</SelectItem>
+                  <SelectItem value="Hard">Hard</SelectItem>
                 </SelectContent>
               </Select>
               <Select value={type} onValueChange={setType}>

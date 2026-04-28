@@ -6,6 +6,10 @@ import { countriesTable, activitiesTable } from "./schema";
 // Each URL was HEAD/GET-verified to return a real image (200 + image/* content-type)
 // from a publicly hot-link-accessible host (no Cloudflare-style HTML challenges,
 // no hot-link 403s).
+//
+// Convention: index 0 is the hero photo. Indices 1..N are the gallery (the
+// gallery() helper deliberately skips index 0 so users never see the same
+// photo twice on the detail page).
 const IMAGES: Record<string, string[]> = {
   egypt: [
     "https://i.redd.it/a7rigd8ndpeg1.jpeg",
@@ -14,13 +18,15 @@ const IMAGES: Record<string, string[]> = {
     "https://egypttoursgroup.com/wp-content/uploads/2025/10/How-Close-Is-the-Nile-River-to-the-Pyramids-of-Giza-Egypt-Tours-Group.webp",
   ],
   // Ras Mohammed National Park, Sharm El Sheikh — Red Sea coral wall + boat dives.
+  // Hero (0) + 3 gallery: park overview, conservation/coastline, divers descending, liveaboard reef wall.
   rasmohammed: [
+    "https://egyptunitedtours.com/wp-content/uploads/2025/08/Diving-Ras-Mohammed-National-Park-1024x683.webp",
     "https://egyptunitedtours.com/wp-content/uploads/2025/08/History-Geography-and-Significance-of-Ras-Mohammed-National-Park-1024x895.webp",
     "https://egyptunitedtours.com/wp-content/uploads/2025/08/Conservation-Rules-and-Environmental-Challenges-of-Ras-Mohammed-1024x873.webp",
-    "https://egyptunitedtours.com/wp-content/uploads/2025/08/Diving-Ras-Mohammed-National-Park-1024x683.webp",
     "https://img.liveaboard.com/imageserver/picture_library/site/diving/egypt/liveaboard-egypt-ras-mohammed-red-sea-xxl.jpg?tr=w-1920,h-800,f-jpeg",
   ],
   // Dahab Blue Hole, Sinai coast — aerial sinkhole + shore-entry diving.
+  // Hero (0) + 3 gallery: aerial sinkhole, coastline, diver descending, hero plate.
   dahab: [
     "https://scubaseekers.com/wp-content/uploads/2024/11/Blue_Hole_Above-medium-e1732092679876.jpg",
     "https://www.egypttoursplus.com/wp-content/uploads/2025/07/Sea-coast-in-Dahab-near-Blue-Hole-diving-at-the-Red-Sea-Sinai-Egypt.webp",
@@ -28,47 +34,64 @@ const IMAGES: Record<string, string[]> = {
     "https://tidefall.xyz/images/blue-hole-dahab-hero.webp",
   ],
   // Mount Sinai sunrise hike (Camel Path / 3,750 stone steps).
+  // Hero (0) + 5 gallery: alternate ascent shots, summit panorama, descent route.
   sinai: [
     "https://www.weseektravel.com/wp-content/uploads/2022/05/mount-sinai-hike-in-egypt-11-1024x683.jpg",
     "https://www.weseektravel.com/wp-content/uploads/2022/05/mount-sinai-hike-in-egypt-19-1024x683.jpg",
     "https://www.weseektravel.com/wp-content/uploads/2022/05/mount-sinai-hike-in-egypt-23-1024x683.jpg",
     "https://www.weseektravel.com/wp-content/uploads/2022/05/mount-sinai-hike-in-egypt-1-1024x683.jpg",
+    "https://www.weseektravel.com/wp-content/uploads/2022/05/mount-sinai-hike-in-egypt-2-1024x683.jpg",
+    "https://www.weseektravel.com/wp-content/uploads/2022/05/mount-sinai-hike-in-egypt-15-1024x683.jpg",
   ],
   // Mount Saint Catherine summit + monastery (Egypt's highest peak, 2,629m).
+  // Hero (0) + 5 gallery: Galt al-Azraq pool, summit cross, monastery, alternate trail shots.
   stcatherine: [
     "https://www.weseektravel.com/wp-content/uploads/2022/05/climbing-mount-sinai-egypt-9-1024x683.jpg",
     "https://www.weseektravel.com/wp-content/uploads/2022/05/mount-sinai-hike-in-egypt-37-1024x683.jpg",
     "https://www.weseektravel.com/wp-content/uploads/2022/05/mount-sinai-hike-in-egypt-36-1024x683.jpg",
     "https://www.weseektravel.com/wp-content/uploads/2022/05/mount-sinai-hike-in-egypt-6-1024x683.jpg",
+    "https://www.weseektravel.com/wp-content/uploads/2022/05/climbing-mount-sinai-egypt-1-1024x683.jpg",
+    "https://www.weseektravel.com/wp-content/uploads/2022/05/climbing-mount-sinai-egypt-3-1024x683.jpg",
   ],
   // White Desert National Park, Farafra — chalk mushroom rock formations.
+  // Hero (0) + 4 gallery: chicken-and-mushroom rock, panorama, formation close-ups, camp.
   whitedesert: [
     "https://www.egypttoursplus.com/wp-content/uploads/2025/07/Bizarre-rock-formation-in-White-desert-Egypt-1.jpg",
     "https://www.egypttoursplus.com/wp-content/uploads/2025/07/The-limestone-formation-rocks-like-a-mushroom-and-a-chicken-in-the-White-desert-Sahara-Egypt-2.jpg",
     "https://www.egypttoursplus.com/wp-content/uploads/2025/07/The-White-Desert-in-the-Sahara-of-central-Egypt-3.jpg",
     "https://www.erikastravels.com/wp-content/uploads/2020/03/White-Desert-Rock-Formations-1.jpg",
+    "https://www.erikastravels.com/wp-content/uploads/2020/03/White-Desert-Camping.jpg",
   ],
   // Siwa Oasis — Great Sand Sea dunes + Bir Wahed salt lakes.
+  // Hero (0) + 5 gallery: dune driving, oasis aerial, salt lakes, hot springs, alt safari shot.
   siwa: [
     "https://www.shouf.io/cdn/shop/files/Great_Sand_sea_safari_3.jpg?v=2777696372178071396",
     "https://www.shouf.io/cdn/shop/files/Great_Sand_sea_safari_1.jpg?v=17055745009504967344",
     "https://herasianadventures.com/wp-content/uploads/2025/07/siwa-oasis-in-egypt-683x1024.jpg",
     "https://egypttoursgroup.com/wp-content/uploads/2025/05/Siwa-Oasis-Hot-Springs-and-Salt-Lakes-Egypt-Tours-Group.png",
+    "https://www.shouf.io/cdn/shop/files/Great_Sand_sea_safari_2.jpg",
+    "https://egypttoursgroup.com/wp-content/uploads/2025/05/Siwa-Oasis-Egypt-Tours-Group.png",
   ],
   // Marsa Alam — Sataya / Sha'ab Samadai dolphin reef snorkelling.
+  // Hero (0) + 5 gallery: snorkeller in reef, dolphins underwater, boat trips, alternate sites.
   marsaalam: [
     "https://sofiescapes.com/wp-content/uploads/2023/10/Dolphin-Snorkel-Egypt-Swimming-Red-sea.jpg",
     "https://sofiescapes.com/wp-content/uploads/2023/10/Dolphin-Snorkel-Egypt-Swimming-Red-sea-1-scaled.jpg",
     "https://a1toureg.com/media/galleries/overnight-snorkeling-trip-at-sataya-dolphin-reef-from-marsa-alam-24158.webp",
     "https://a1toureg.com/media/galleries/overnight-snorkeling-trip-at-sataya-dolphin-reef-from-marsa-alam-24161.webp",
+    "https://a1toureg.com/media/galleries/overnight-snorkeling-trip-at-sataya-dolphin-reef-from-marsa-alam-24159.webp",
+    "https://a1toureg.com/media/galleries/overnight-snorkeling-trip-at-sataya-dolphin-reef-from-marsa-alam-24162.webp",
   ],
   // Wadi El Gemal National Park — Bedouin desert camping, mangrove channels,
   // Eastern-Desert 4x4 tracks, and camel-back excursions with the Ababda.
+  // Hero (0) + 5 gallery: camel/4x4 safaris, day-tour aerial, camp at sunset, alternate dunes.
   wadiel: [
     "https://megatoursegypt.com/wp-content/uploads/2025/09/super-Safari-5-1-636x426.jpg",
     "https://images.trvl-media.com/place/553248635997986417/765be985-986a-4f36-860a-1413e4af87ca.jpg?impolicy=fcrop&w=1040&h=580&q=mediumHigh",
     "https://a1toureg.com/media/toursItenary/24/10/27/c617dc85-ca50-4a0b-a12d-5d4119bcad52_wadi-el-gemal-desert-day-tou_KnH2EVp.webp",
     "https://www.egypttoursportal.com/images/2024/01/Wadi-El-Gemal-National-Park-Camping-Spots-in-Egypt-Egypt-Tours-Portal.jpg",
+    "https://megatoursegypt.com/wp-content/uploads/2025/09/super-Safari-1-1-636x426.jpg",
+    "https://megatoursegypt.com/wp-content/uploads/2025/09/super-Safari-3-1-636x426.jpg",
   ],
 };
 
@@ -78,8 +101,11 @@ function pick(key: string, idx = 0): string {
   return arr[idx % arr.length] ?? "";
 }
 
+// Returns gallery photos for the activity detail page. Always excludes index 0
+// (which is the hero image) so the user never sees the hero duplicated as a
+// thumbnail. Each gallery has 3–5 unique photos per spec.
 function gallery(key: string): string[] {
-  return (IMAGES[key] ?? []).slice(0, 4);
+  return (IMAGES[key] ?? []).slice(1);
 }
 
 const EGYPT = {
@@ -354,7 +380,7 @@ const ACTIVITIES: ActivitySeed[] = [
   },
 ];
 
-const SEED_VERSION = "egypt-only-v3-images.1";
+const SEED_VERSION = "egypt-only-v4-galleries.1";
 const SEED_LOCK_NS = 7327342;
 const SEED_LOCK_ID = 1;
 

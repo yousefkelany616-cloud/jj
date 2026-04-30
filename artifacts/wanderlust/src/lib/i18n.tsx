@@ -29,7 +29,7 @@ const en: Dict = {
   "nav.toggleLanguage": "Toggle language",
 
   // Home
-  "home.title": "The World is Yours to Explore",
+  "home.title": "The World is Yours to xploria",
   "home.subtitle":
     "Discover breathtaking trails, hidden oases, and epic adventures across Egypt.",
   "home.searchPlaceholder":

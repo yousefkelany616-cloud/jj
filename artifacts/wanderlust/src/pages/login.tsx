@@ -9,7 +9,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/component
 import { useLocation } from "wouter";
 import { useQueryClient } from "@tanstack/react-query";
 import { getGetSessionQueryKey } from "@workspace/api-client-react";
-import { Compass } from "lucide-react";
+import xploriaLogo from "@assets/xploria-logo-transparent.png";
 import { useToast } from "@/hooks/use-toast";
 import { useT } from "@/lib/i18n";
 
@@ -40,7 +40,7 @@ export default function Login() {
     try {
       await loginMutation.mutateAsync({ data: values });
       queryClient.invalidateQueries({ queryKey: getGetSessionQueryKey() });
-      toast({ title: "Welcome to Wanderlust!" });
+      toast({ title: "Welcome to Xploria!" });
       setLocation("/dashboard");
     } catch (e) {
       toast({ title: "Login failed", variant: "destructive" });
@@ -58,7 +58,12 @@ export default function Login() {
         <div className="absolute inset-0 bg-black/40" />
         <div className="absolute inset-0 flex items-center justify-center p-12">
           <div className="max-w-md text-white text-center">
-            <Compass className="w-16 h-16 mx-auto mb-8 opacity-80" />
+            <img
+              src={xploriaLogo}
+              alt="Xploria"
+              className="h-24 md:h-28 w-auto mx-auto mb-8 object-contain opacity-90"
+              style={{ filter: "invert(1) brightness(1.1)" }}
+            />
             <h1 className="text-4xl font-serif font-bold mb-4">{t("login.title")}</h1>
             <p className="text-lg text-white/80">{t("home.subtitle")}</p>
           </div>
@@ -92,7 +97,7 @@ export default function Login() {
                   <FormItem>
                     <Label>{t("login.email")}</Label>
                     <FormControl>
-                      <Input type="email" placeholder="explorer@wanderlust.com" {...field} />
+                      <Input type="email" placeholder="explorer@xploria.com" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

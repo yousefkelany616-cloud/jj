@@ -35,10 +35,10 @@ export function Navbar() {
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center gap-6">
-          <Link href="/" className="flex items-center gap-2 group" aria-label="Wanderlust">
+          <Link href="/" className="flex items-center gap-2 group" aria-label="Xploria">
             <img
               src={xploriaLogo}
-              alt="Wanderlust"
+              alt="Xploria"
               className="h-12 w-auto object-contain transition-opacity group-hover:opacity-80 dark:invert"
             />
           </Link>

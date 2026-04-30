@@ -47,7 +47,7 @@ export default function TripDetail() {
       try {
         await navigator.share({
           title: trip?.title,
-          text: `Check out my trip on Wanderlust!`,
+          text: `Check out my trip on Xploria!`,
           url,
         });
       } catch (err) {

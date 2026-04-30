@@ -110,7 +110,7 @@ const en: Dict = {
   "trip.share": "Share",
 
   // Login
-  "login.title": "Welcome to Wanderlust",
+  "login.title": "Welcome to Xploria",
   "login.subtitle": "Sign in to track your adventures.",
   "login.name": "Your name",
   "login.email": "Email address",
@@ -252,7 +252,7 @@ const ar: Dict = {
   "trip.share": "مشاركة",
 
   // Login
-  "login.title": "مرحبا بك في Wanderlust",
+  "login.title": "مرحبا بك في Xploria",
   "login.subtitle": "سجل الدخول لتتبع مغامراتك.",
   "login.name": "اسمك",
   "login.email": "البريد الإلكتروني",

@@ -97,7 +97,7 @@ export default function Home() {
           >
             <img
               src={xploriaLogo}
-              alt="Wanderlust"
+              alt="Xploria"
               className="h-24 md:h-28 w-auto mx-auto mb-6 object-contain opacity-90"
               style={{ filter: "invert(1) brightness(1.1)" }}
             />

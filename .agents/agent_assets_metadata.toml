@@ -1,0 +1,20 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "2g2xDNRTMD6XZtHGvSCw4"
+uri = "file://attached_assets/atlas-adventures/atlas-adventures-logo.png"
+type = "image"
+title = "Atlas Adventures — Primary Logo (1024x1024, transparent)"
+
+[[outputs]]
+id = "idbXagv74EBNIxCUDczjl"
+uri = "file://attached_assets/atlas-adventures/atlas-adventures-logo-with-subtitle.png"
+type = "image"
+title = "Atlas Adventures — Logo With Subtitle (alternate)"
+
+[[outputs]]
+id = "Fvhu7FV5ySOHdyME6bEF7"
+uri = "file://attached_assets/atlas-adventures/atlas-adventures-instagram.png"
+type = "image"
+title = "Atlas Adventures — Instagram Profile Picture (1024x1024)"

@@ -20,7 +20,7 @@ import {
   Wallet,
   ShieldCheck,
 } from "lucide-react";
-import xploriaLogo from "@assets/xploria-logo-transparent.png";
+import atlasLogo from "@assets/atlas-adventures/atlas-adventures-logo.png";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { motion } from "framer-motion";
@@ -96,10 +96,9 @@ export default function Home() {
             transition={{ duration: 0.7 }}
           >
             <img
-              src={xploriaLogo}
-              alt="Xploria"
-              className="h-24 md:h-28 w-auto mx-auto mb-6 object-contain opacity-90"
-              style={{ filter: "invert(1) brightness(1.1)" }}
+              src={atlasLogo}
+              alt="Atlas Adventures"
+              className="h-28 md:h-32 w-auto mx-auto mb-6 object-contain drop-shadow-lg"
             />
             <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6 tracking-tight">
               {t("home.title")}

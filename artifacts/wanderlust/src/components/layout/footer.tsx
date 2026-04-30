@@ -1,10 +1,9 @@
 import { Instagram } from "lucide-react";
 import { useT } from "@/lib/i18n";
-import xploriaLogo from "@assets/xploria-logo-transparent.png";
+import atlasLogo from "@assets/atlas-adventures/atlas-adventures-logo.png";
 
 const INSTAGRAM_URL =
   "https://www.instagram.com/xploria21?igsh=MXRhOHh6NTd0cTFzZg%3D%3D&utm_source=qr";
-const INSTAGRAM_HANDLE = "@xploria21";
 
 export function Footer() {
   const t = useT();
@@ -16,9 +15,9 @@ export function Footer() {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div className="flex items-center gap-3">
             <img
-              src={xploriaLogo}
-              alt="Xploria"
-              className="h-10 w-auto object-contain dark:invert"
+              src={atlasLogo}
+              alt="Atlas Adventures"
+              className="h-10 w-auto object-contain"
             />
             <p className="text-sm text-muted-foreground max-w-xs">
               {t("footer.tagline")}
@@ -33,17 +32,17 @@ export function Footer() {
               href={INSTAGRAM_URL}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={`Instagram ${INSTAGRAM_HANDLE}`}
+              aria-label="Atlas Adventures on Instagram"
               className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-sm font-medium hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors"
             >
               <Instagram className="w-4 h-4" />
-              <span>{INSTAGRAM_HANDLE}</span>
+              <span>Instagram</span>
             </a>
           </div>
         </div>
 
         <div className="mt-8 pt-6 border-t border-border/50 text-center text-xs text-muted-foreground">
-          © {year} Xploria. {t("footer.rights")}
+          © {year} Atlas Adventures. {t("footer.rights")}
         </div>
       </div>
     </footer>

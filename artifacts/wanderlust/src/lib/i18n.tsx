@@ -109,13 +109,12 @@ const en: Dict = {
   "trip.delete": "Delete",
   "trip.share": "Share",
 
-  // Login
   "footer.tagline": "Your guide to adventure across Egypt.",
   "footer.followUs": "Follow us",
   "footer.rights": "All rights reserved.",
 
   // Login
-  "login.title": "Welcome to Xploria",
+  "login.title": "Welcome to Atlas Adventures",
   "login.subtitle": "Sign in to track your adventures.",
   "login.name": "Your name",
   "login.email": "Email address",
@@ -256,13 +255,12 @@ const ar: Dict = {
   "trip.delete": "حذف",
   "trip.share": "مشاركة",
 
-  // Login
   "footer.tagline": "دليلك للمغامرة في جميع أنحاء مصر.",
   "footer.followUs": "تابعنا",
   "footer.rights": "جميع الحقوق محفوظة.",
 
   // Login
-  "login.title": "مرحبا بك في Xploria",
+  "login.title": "مرحبا بك في Atlas Adventures",
   "login.subtitle": "سجل الدخول لتتبع مغامراتك.",
   "login.name": "اسمك",
   "login.email": "البريد الإلكتروني",

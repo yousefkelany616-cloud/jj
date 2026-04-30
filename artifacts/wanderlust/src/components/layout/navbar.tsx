@@ -2,6 +2,7 @@ import { Link, useLocation } from "wouter";
 import { useGetSession, useLogout } from "@workspace/api-client-react";
 import { Button } from "@/components/ui/button";
 import { Compass, User as UserIcon, Menu, Map as MapIcon, LogOut, Sun, Moon, Languages } from "lucide-react";
+import xploriaLogo from "@assets/xploria-logo-transparent.png";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useTheme } from "next-themes";
 import { useQueryClient } from "@tanstack/react-query";
@@ -34,11 +35,12 @@ export function Navbar() {
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center gap-6">
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="bg-primary/10 p-2 rounded-xl group-hover:bg-primary/20 transition-colors">
-              <Compass className="h-6 w-6 text-primary" />
-            </div>
-            <span className="font-serif font-bold text-xl tracking-tight hidden sm:inline-block">Wanderlust</span>
+          <Link href="/" className="flex items-center gap-2 group" aria-label="Wanderlust">
+            <img
+              src={xploriaLogo}
+              alt="Wanderlust"
+              className="h-12 w-auto object-contain transition-opacity group-hover:opacity-80 dark:invert"
+            />
           </Link>
           <nav className="hidden md:flex items-center gap-6">
             {navLinks.map((link) => (

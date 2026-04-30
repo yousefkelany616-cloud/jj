@@ -2,7 +2,7 @@ import { Link, useLocation } from "wouter";
 import { useGetSession, useLogout } from "@workspace/api-client-react";
 import { Button } from "@/components/ui/button";
 import { Compass, User as UserIcon, Menu, Map as MapIcon, LogOut, Sun, Moon, Languages } from "lucide-react";
-import atlasLogo from "@assets/atlas-adventures/atlas-adventures-logo.png";
+import atlasLogo from "@assets/647E0BA5-823A-4C18-B916-AE4BB384C88D.PNG";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useTheme } from "next-themes";
 import { useQueryClient } from "@tanstack/react-query";

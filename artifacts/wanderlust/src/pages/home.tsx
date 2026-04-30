@@ -5,7 +5,6 @@ import { CountryCard, CountryCardSkeleton } from "@/components/ui/country-card";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "wouter";
 import {
-  Compass,
   ArrowRight,
   Search,
   Map as MapIcon,
@@ -21,6 +20,7 @@ import {
   Wallet,
   ShieldCheck,
 } from "lucide-react";
+import xploriaLogo from "@assets/xploria-logo-transparent.png";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { motion } from "framer-motion";
@@ -95,7 +95,12 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
           >
-            <Compass className="w-16 h-16 mx-auto mb-6 opacity-80" />
+            <img
+              src={xploriaLogo}
+              alt="Wanderlust"
+              className="h-24 md:h-28 w-auto mx-auto mb-6 object-contain opacity-90"
+              style={{ filter: "invert(1) brightness(1.1)" }}
+            />
             <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6 tracking-tight">
               {t("home.title")}
             </h1>

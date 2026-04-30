@@ -20,7 +20,7 @@ import {
   Wallet,
   ShieldCheck,
 } from "lucide-react";
-import atlasLogo from "@assets/atlas-adventures/atlas-adventures-logo.png";
+import atlasLogo from "@assets/647E0BA5-823A-4C18-B916-AE4BB384C88D.PNG";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { motion } from "framer-motion";

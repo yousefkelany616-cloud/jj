@@ -110,6 +110,11 @@ const en: Dict = {
   "trip.share": "Share",
 
   // Login
+  "footer.tagline": "Your guide to adventure across Egypt.",
+  "footer.followUs": "Follow us",
+  "footer.rights": "All rights reserved.",
+
+  // Login
   "login.title": "Welcome to Xploria",
   "login.subtitle": "Sign in to track your adventures.",
   "login.name": "Your name",
@@ -250,6 +255,11 @@ const ar: Dict = {
   "trip.empty": "لا توجد رحلات بعد — ابدأ بتسجيل أول مغامرة.",
   "trip.delete": "حذف",
   "trip.share": "مشاركة",
+
+  // Login
+  "footer.tagline": "دليلك للمغامرة في جميع أنحاء مصر.",
+  "footer.followUs": "تابعنا",
+  "footer.rights": "جميع الحقوق محفوظة.",
 
   // Login
   "login.title": "مرحبا بك في Xploria",

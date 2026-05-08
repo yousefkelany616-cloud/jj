@@ -14,5 +14,8 @@
     "lightningcss-darwin-arm64": "^1.32.0",
     "prettier": "^3.8.1",
     "typescript": "~5.9.2"
+  },
+  "optionalDependencies": {
+    "@tailwindcss/oxide-darwin-arm64": "4.2.1"
   }
 }

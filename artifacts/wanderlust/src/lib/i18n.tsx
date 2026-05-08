@@ -324,7 +324,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     return saved === "ar" ? "ar" : "en";
   });
 
-  const dir = lang === "ar" ? "rtl" : "ltr";
+  const dir: I18nContextValue["dir"] = lang === "ar" ? "rtl" : "ltr";
 
   useEffect(() => {
     if (typeof document === "undefined") return;

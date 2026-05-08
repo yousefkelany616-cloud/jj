@@ -38,9 +38,9 @@ export default function ActivityDetail() {
     if (!activity) return;
     try {
       if (activity.isFavorited) {
-        await removeFavorite.mutateAsync({ id });
+        await removeFavorite.mutateAsync({ activityId: id });
       } else {
-        await addFavorite.mutateAsync({ id });
+        await addFavorite.mutateAsync({ activityId: id });
       }
       queryClient.invalidateQueries({ queryKey: getGetActivityQueryKey(id) });
       toast({ title: activity.isFavorited ? t("activity.removeFavorite") : t("activity.addFavorite") });

@@ -141,9 +141,9 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {featuredLoading
               ? Array.from({ length: 4 }).map((_, i) => <ActivityCardSkeleton key={i} />)
-              : featured?.map((activity, i) => (
+              : Array.isArray(featured) ? featured.map((activity, i) => (
                   <ActivityCard key={activity.id} activity={activity} index={i} />
-                ))}
+                )) : null}
           </div>
           
           <div className="mt-8 text-center sm:hidden">
@@ -173,7 +173,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {trendingLoading
               ? Array.from({ length: 3 }).map((_, i) => <CountryCardSkeleton key={i} />)
-              : trending?.map((dest, i) => (
+              : Array.isArray(trending) ? trending.map((dest, i) => (
                   <CountryCard 
                     key={dest.countryCode} 
                     country={{
@@ -186,7 +186,7 @@ export default function Home() {
                     }} 
                     index={i} 
                   />
-                ))}
+                )) : null}
           </div>
         </div>
       </section>

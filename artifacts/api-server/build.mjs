@@ -14,12 +14,10 @@ async function buildAll() {
   const distDir = path.resolve(artifactDir, "dist");
   await rm(distDir, { recursive: true, force: true });
 
-  await esbuild({
-    entryPoints: [path.resolve(artifactDir, "src/index.ts")],
+  const commonOptions = {
     platform: "node",
     bundle: true,
     format: "esm",
-    outdir: distDir,
     outExtension: { ".js": ".mjs" },
     logLevel: "info",
     // Some packages may not be bundleable, so we externalize them, we can add more here as needed.
@@ -117,6 +115,19 @@ globalThis.__filename = __bannerUrl.fileURLToPath(import.meta.url);
 globalThis.__dirname = __bannerPath.dirname(globalThis.__filename);
     `,
     },
+  };
+
+  await esbuild({
+    ...commonOptions,
+    entryPoints: [path.resolve(artifactDir, "src/index.ts")],
+    outdir: distDir,
+  });
+
+  await esbuild({
+    ...commonOptions,
+    entryPoints: [path.resolve(artifactDir, "api/index.ts")],
+    outdir: distDir,
+    entryNames: "api/[name]",
   });
 }
 

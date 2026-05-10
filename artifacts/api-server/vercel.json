@@ -3,8 +3,11 @@
   "buildCommand": "pnpm run build",
   "builds": [
     {
-      "src": "dist/api/index.mjs",
-      "use": "@vercel/node"
+      "src": "package.json",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": "dist/**"
+      }
     }
   ],
   "routes": [
